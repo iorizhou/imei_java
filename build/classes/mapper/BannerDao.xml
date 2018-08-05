@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imei.app.dao.BannerDao">
+	<select id="getTopBanner" resultType="Banner">
+		SELECT
+		id,
+		name,
+		description,
+		jump_type,
+		jump_url,
+		create_time,
+		recommend_time,
+		is_recommend,
+		pic_url
+		FROM
+		banner
+		WHERE
+		is_recommend = 1
+		ORDER BY
+		recommend_time DESC
+	</select>
+</mapper>

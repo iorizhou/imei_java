@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imei.app.dao.DiaryDao">
+	<select id="getDiaryListByType" resultType="Diary">
+		SELECT
+		id,
+		author,
+		publish_time,
+		author_avatar,
+		cover_img,
+		simple_content,
+		tag,
+		item_id,
+		item_name,
+		item_discount,
+		view_count,
+		comment_count,
+		diary_type_id
+		FROM
+		diary
+		ORDER BY
+		publish_time DESC,view_count DESC
+	</select>
+</mapper>
