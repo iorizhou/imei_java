@@ -6,4 +6,28 @@
 	<insert id="regUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
   insert into user(phone_num, pwd,nick_name,reg_date,city) values(#{phoneNum}, #{pwd}, #{nickName}, #{regDate}, #{city});
 </insert>
+
+<select id="findUser" resultType="User">
+		SELECT
+		id,
+		phone_num,
+		nick_name,
+		reg_date,
+		city
+		FROM
+		user
+		WHERE
+		id = #{id}
+		Limit 
+		0,1
+	</select>
+	
+	<select id="checkPhonenumReg" resultType="java.lang.Integer">
+		SELECT
+		count(*)
+		FROM
+		user
+		WHERE
+		phone_num = #{phone_num}
+	</select>
 </mapper>

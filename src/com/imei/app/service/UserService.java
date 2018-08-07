@@ -9,4 +9,6 @@ import com.imei.app.entity.User;
 
 public interface UserService {
 	long regUser(String phoneNum,String pwd,String nickName,Date regDate,String city);
+	User findUser(long id);
+	int checkPhonenumReg(String phoneNum);
 }

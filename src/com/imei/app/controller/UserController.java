@@ -30,11 +30,19 @@ public class UserController {
 	@ResponseBody
 	private Result reg(@RequestParam("phoneNum")String phoneNum,@RequestParam("pwd")String pwd,@RequestParam("city")String city) {
         
+		int count = userService.checkPhonenumReg(phoneNum);
+		if (count>0) {
+			return new Result<>(-1, "注册失败,该手机号已存在");
+		}
+		
 		long id = userService.regUser(phoneNum, MD5Util.md5(pwd), "i美er_"+System.currentTimeMillis()+new Random().nextInt(100), new Date(), city);
-//		if (user==null) {
-//			return new Result<>(-1, "注册失败,该手机号已存在");
-//		}
-//		UserDTO userDTO = new UserDTO(user.getId(), user.getPhoneNum(), TokenUtil.getInstance().genToken(user.getPhoneNum(), user.getId()), user.getNickName(), user.getRegDate(), user.getCity());
-        return new Result(0,"success",id);
+		
+		User user =userService.findUser(id);
+		System.out.println("userid = "+user.getId());
+		if (user==null) {
+			return new Result<>(-1, "注册失败");
+		}
+		UserDTO userDTO = new UserDTO(user.getPhoneNum(), TokenUtil.getInstance().genToken(user.getPhoneNum(), user.getId()), user.getNickName(), user.getRegDate(), user.getCity());
+        return new Result(0,"success",userDTO);
 	}
 }

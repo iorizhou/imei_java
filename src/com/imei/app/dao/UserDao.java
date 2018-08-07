@@ -7,5 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.imei.app.entity.User;
 
 public interface UserDao {
-	long regUser(User user);
+	int regUser(User user);
+	User findUser(@Param("id")long id);
+	int checkPhonenumReg(@Param("phone_num")String phoneNum);
 }

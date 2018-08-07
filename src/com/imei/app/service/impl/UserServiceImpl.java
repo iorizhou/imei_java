@@ -20,7 +20,21 @@ public class UserServiceImpl implements UserService {
 	public long regUser(String phoneNum, String pwd, String nickName, Date regDate,String city) {
 		// TODO Auto-generated method stub
 		User user = new User(phoneNum, pwd, nickName, regDate, city);
-		return userDao.regUser(user);
+		userDao.regUser(user);
+		System.out.println("service id = "+user.getId() +" pwd = "+user.getPwd());
+		return user.getId();
 	}
 
+	@Override
+	public User findUser(long id) {
+		// TODO Auto-generated method stub
+		return userDao.findUser(id);
+	}
+
+	@Override
+	public int checkPhonenumReg(String phoneNum) {
+		// TODO Auto-generated method stub
+		return userDao.checkPhonenumReg(phoneNum);
+	}
+	
 }

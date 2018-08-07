@@ -3,29 +3,30 @@ package com.imei.app.dto;
 import java.util.Date;
 
 public class UserDTO {
-	private long id;
 	private String userId;
 	private String token;
 	private String nickName;
 	private Date regDate;
 	private String city;
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
+	
 	public String getPhoneNum() {
 		return userId;
 	}
 	public void setPhoneNum(String phoneNum) {
 		this.userId = phoneNum;
 	}
-	public String getPwd() {
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getToken() {
 		return token;
 	}
-	public void setPwd(String pwd) {
-		this.token = pwd;
+	public void setToken(String token) {
+		this.token = token;
 	}
 	public String getNickName() {
 		return nickName;
@@ -50,9 +51,8 @@ public class UserDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public UserDTO(long id, String phoneNum, String token, String nickName, Date regDate,String city) {
+	public UserDTO(String phoneNum, String token, String nickName, Date regDate,String city) {
 		super();
-		this.id = id;
 		this.userId = phoneNum;
 		this.token = token;
 		this.nickName = nickName;
