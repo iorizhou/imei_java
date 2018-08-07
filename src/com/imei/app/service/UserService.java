@@ -12,4 +12,6 @@ public interface UserService {
 	User findUser(long id);
 	int checkPhonenumReg(String phoneNum);
 	User login(String phoneNum,String pwd);
+	public int updateUserInfo(User user);
+	
 }

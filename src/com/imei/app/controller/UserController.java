@@ -54,4 +54,22 @@ public class UserController {
 		UserDTO userDTO = new UserDTO(user.getPhoneNum(), TokenUtil.getInstance().genToken(user.getPhoneNum(), user.getId()), user.getNickName(), user.getRegDate(), user.getCity());
         return new Result(0,"success",userDTO);
 	}
+	
+	@RequestMapping(value ="/updateAccountInfo", method = RequestMethod.GET, produces = {
+    "application/json; charset=utf-8" })
+	@ResponseBody
+	private Result updateAccountInfo(@RequestParam("userId")long id,@RequestParam("city")String city) {
+		System.out.println("city = "+city);
+		User user = userService.findUser(id);
+		if (user==null) {
+			return new Result<>(-1, "修改失败，该用户不存在");
+		}
+		user.setCity(city);
+		int count = userService.updateUserInfo(user);
+		
+		if (count<=0) {
+			return new Result<>(-1, "修改失败，请稍候重试");
+		}
+        return new Result(0,"个人信息修改成功");
+	}
 }

@@ -45,4 +45,13 @@
 		AND
 		pwd = #{pwd}
 	</select>
+	
+	<update id="updateUserInfo"  parameterType="User">
+ UPDATE user
+ <trim prefix="set" suffixOverrides=",">
+  <if test="city!=null">city=#{city},</if>
+ </trim>
+ WHERE id=#{id}
+</update>
+	
 </mapper>

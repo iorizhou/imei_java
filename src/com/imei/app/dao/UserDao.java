@@ -11,4 +11,5 @@ public interface UserDao {
 	User findUser(@Param("id")long id);
 	int checkPhonenumReg(@Param("phone_num")String phoneNum);
 	User login(@Param("phoneNum")String phoneNum,@Param("pwd")String pwd);
+	int updateUserInfo(User user); 
 }
