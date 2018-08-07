@@ -36,5 +36,13 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userDao.checkPhonenumReg(phoneNum);
 	}
+
+	@Override
+	public User login(String phoneNum, String pwd) {
+		// TODO Auto-generated method stub
+		return userDao.login(phoneNum, pwd);
+	}
+	
+	
 	
 }

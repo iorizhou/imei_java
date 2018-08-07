@@ -29,18 +29,27 @@ public class UserController {
     "application/json; charset=utf-8" })
 	@ResponseBody
 	private Result reg(@RequestParam("phoneNum")String phoneNum,@RequestParam("pwd")String pwd,@RequestParam("city")String city) {
-        
 		int count = userService.checkPhonenumReg(phoneNum);
 		if (count>0) {
 			return new Result<>(-1, "×¢²áÊ§°Ü,¸ÃÊÖ»úºÅÒÑ´æÔÚ");
 		}
-		
 		long id = userService.regUser(phoneNum, MD5Util.md5(pwd), "iÃÀer_"+System.currentTimeMillis()+new Random().nextInt(100), new Date(), city);
-		
 		User user =userService.findUser(id);
 		System.out.println("userid = "+user.getId());
 		if (user==null) {
 			return new Result<>(-1, "×¢²áÊ§°Ü");
+		}
+		UserDTO userDTO = new UserDTO(user.getPhoneNum(), TokenUtil.getInstance().genToken(user.getPhoneNum(), user.getId()), user.getNickName(), user.getRegDate(), user.getCity());
+        return new Result(0,"success",userDTO);
+	}
+	
+	@RequestMapping(value ="/login", method = RequestMethod.GET, produces = {
+    "application/json; charset=utf-8" })
+	@ResponseBody
+	private Result login(@RequestParam("phoneNum")String phoneNum,@RequestParam("pwd")String pwd) {
+		User user = userService.login(phoneNum, MD5Util.md5(pwd));
+		if (user==null) {
+			return new Result<>(-1, "µÇÂ¼Ê§°Ü£¬Çë¼ì²éÄúµÄÕÊºÅÃÜÂë");
 		}
 		UserDTO userDTO = new UserDTO(user.getPhoneNum(), TokenUtil.getInstance().genToken(user.getPhoneNum(), user.getId()), user.getNickName(), user.getRegDate(), user.getCity());
         return new Result(0,"success",userDTO);
