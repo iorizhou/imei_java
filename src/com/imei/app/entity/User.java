@@ -11,7 +11,7 @@ public class User {
 	private String nickName;
 	private Date regDate;
 	private String city;
-	
+	private String avatar;
 	
 	
 	public int getId() {
@@ -57,13 +57,20 @@ public class User {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(String phoneNum, String pwd, String nickName, Date regDate,String city) {
+	public User(String phoneNum, String pwd, String nickName, Date regDate,String city,String avatar) {
 		super();
 		this.phoneNum = phoneNum;
 		this.pwd = pwd;
 		this.nickName = nickName;
 		this.regDate = regDate;
 		this.city = city;
+		this.avatar = avatar;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	
 	

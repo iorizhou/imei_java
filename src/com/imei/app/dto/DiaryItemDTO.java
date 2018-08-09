@@ -9,6 +9,11 @@ public class DiaryItemDTO {
 	private String content;
 	private String publishDate;
 	private String simpleContent;
+	private long itemId;   //该item所属日记，对应的医疗项目的id
+	private String itemPicUrl;  
+	private String itemName;
+	private long itemDiscount;
+	private long itemOrigPrice;
 	public long getId() {
 		return id;
 	}
@@ -60,6 +65,36 @@ public class DiaryItemDTO {
 	public DiaryItemDTO() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public long getItemId() {
+		return itemId;
+	}
+	public void setItemId(long itemId) {
+		this.itemId = itemId;
+	}
+	public String getItemPicUrl() {
+		return itemPicUrl;
+	}
+	public void setItemPicUrl(String itemPicUrl) {
+		this.itemPicUrl = itemPicUrl;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	public long getItemDiscount() {
+		return itemDiscount;
+	}
+	public void setItemDiscount(long itemDiscount) {
+		this.itemDiscount = itemDiscount;
+	}
+	public long getItemOrigPrice() {
+		return itemOrigPrice;
+	}
+	public void setItemOrigPrice(long itemOrigPrice) {
+		this.itemOrigPrice = itemOrigPrice;
 	}
 	
 	

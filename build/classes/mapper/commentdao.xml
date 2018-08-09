@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imei.app.dao.CommentDao">
+	
+
+<select id="queryCommentListByDiaryId" resultType="Comment">
+		SELECT
+		id,
+		diary_id,
+		user_id,
+		publish_date,
+		content
+		FROM
+		comment
+		WHERE
+		diary_id = #{diary_id}
+		Limit 
+		#{index},#{count}
+	</select>
+	
+	
+	
+</mapper>

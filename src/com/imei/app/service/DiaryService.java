@@ -8,4 +8,5 @@ import com.imei.app.entity.Diary;
 
 public interface DiaryService {
 	public List<Diary> getDiaryListByType(long typeid,int index,int count);
+	Diary queryById(long id);
 }

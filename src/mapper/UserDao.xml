@@ -13,7 +13,8 @@
 		phone_num,
 		nick_name,
 		reg_date,
-		city
+		city,
+		avatar
 		FROM
 		user
 		WHERE
@@ -37,7 +38,8 @@
 		phone_num,
 		nick_name,
 		reg_date,
-		city
+		city,
+		avatar
 		FROM
 		user
 		WHERE

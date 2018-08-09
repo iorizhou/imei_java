@@ -19,4 +19,16 @@
 		LIMIT
 		#{index},#{count}
 	</select>
+	<select id="queryById" resultType="DiaryItem">
+		SELECT
+		id,
+		diary_id,
+		title,
+		content,
+		publish_date
+		FROM
+		diaryitem
+		WHERE
+		id = #{id}
+	</select>
 </mapper>

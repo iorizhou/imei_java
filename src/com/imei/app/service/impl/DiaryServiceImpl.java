@@ -18,5 +18,12 @@ public class DiaryServiceImpl implements DiaryService {
 		// TODO Auto-generated method stub
 		return diaryDao.getDiaryListByType(typeid, index, count);
 	}
+	@Override
+	public Diary queryById(long id) {
+		// TODO Auto-generated method stub
+		return diaryDao.queryById(id);
+	}
+	
+	
 
 }
