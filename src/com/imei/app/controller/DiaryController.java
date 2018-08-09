@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imei.app.dto.DiaryDTO;
+import com.imei.app.dto.DiaryItemDTO;
 import com.imei.app.dto.DiaryTypeDTO;
 import com.imei.app.dto.ItemDTO;
 import com.imei.app.entity.Diary;
+import com.imei.app.entity.DiaryItem;
 import com.imei.app.entity.DiaryType;
 import com.imei.app.entity.Item;
+import com.imei.app.service.DiaryItemService;
 import com.imei.app.service.DiaryService;
 import com.imei.app.service.DiaryTypeService;
 import com.imei.app.util.Result;
@@ -30,13 +33,16 @@ public class DiaryController {
 	DiaryTypeService diaryTypeService;
 	@Autowired
 	DiaryService diaryService; 
+	@Autowired
+	DiaryItemService diaryItemService;
+	
 	@RequestMapping(value ="/getAllDiaryTypes", method = RequestMethod.GET, produces = {
     "application/json; charset=utf-8" })
 	@ResponseBody
     private Result getAllDiaryTypes() {
         List<DiaryType> lists = diaryTypeService.queryAllDiaryTypes();
         if (lists == null || lists.size() == 0) {
-            return new Result<ItemDTO>(0,"ÔİÎŞÃÀÈİÈÕ¼Ç·ÖÀàĞÅÏ¢");
+            return new Result<ItemDTO>(0,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢");
         }
         List<DiaryTypeDTO> datas = new ArrayList<DiaryTypeDTO>();
         for(DiaryType type : lists) {
@@ -53,11 +59,28 @@ public class DiaryController {
 		System.out.println("typeid= "+typeid +" index = "+index + " count = "+count);
         List<Diary> lists = diaryService.getDiaryListByType(typeid,index,count);
         if (lists == null || lists.size() == 0) {
-            return new Result<ItemDTO>(0,"¸Ã·ÖÀàÏÂÔİÎŞÃÀÈİÈÕ¼Ç");
+            return new Result<ItemDTO>(0,"ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½");
         }
         List<DiaryDTO> datas = new ArrayList<DiaryDTO>();
         for(Diary diary : lists) {
         	DiaryDTO dto = new DiaryDTO(diary.getId(), diary.getAuthor(), diary.getPublishTime(), diary.getAuthorAvatar(), diary.getCoverImg(), diary.getSimpleContent(), diary.getTag(), diary.getItemId(), diary.getItemName(), diary.getItemDiscount(), diary.getViewCount(), diary.getCommentCount(), diary.getDiaryTypeId());
+        	datas.add(dto);
+        }
+        return new Result(0,"success",datas);
+    }
+	
+	//æ ¹æ®æ—¥è®°idï¼ŒæŸ¥è¯¢å­itemåˆ—è¡¨
+	@RequestMapping(value ="/getDiaryItemListByDiaryId", method = RequestMethod.GET, produces = {
+    "application/json; charset=utf-8" })
+	@ResponseBody
+    private Result getDiaryItemListByDiaryId(@RequestParam("diaryid")long diaryid,@RequestParam("index")int index,@RequestParam("count")int count) {
+        List<DiaryItem> lists = diaryItemService.queryListByDiaryId(diaryid,index,count);
+        if (lists == null || lists.size() == 0) {
+            return new Result<ItemDTO>(0,"è¯¥æ—¥è®°ä¸‹æ— è¯¦ç»†æ•°æ®");
+        }
+        List<DiaryItemDTO> datas = new ArrayList<DiaryItemDTO>();
+        for(DiaryItem item : lists) {
+        	DiaryItemDTO dto = new DiaryItemDTO(item.getId(), item.getDiaryId(), item.getTitle(), item.getContent(), item.getPublishDate(), item.getContent());
         	datas.add(dto);
         }
         return new Result(0,"success",datas);
