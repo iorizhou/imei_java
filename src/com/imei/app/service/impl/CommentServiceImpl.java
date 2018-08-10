@@ -19,6 +19,11 @@ public class CommentServiceImpl implements CommentService{
 		// TODO Auto-generated method stub
 		return commentDao.queryCommentListByDiaryId(diaryid,index,count);
 	}
+	@Override
+	public int addComment(Comment comment) {
+		// TODO Auto-generated method stub
+		return commentDao.addComment(comment);
+	}
 	
 	
 }

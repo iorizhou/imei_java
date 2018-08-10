@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imei.app.dao.MessageDao">
+	<select id="queryUnreadList" resultType="Message">
+		SELECT
+		id,
+		content,
+		send_time,
+		sender_id,
+		recver_id,
+		status
+		FROM
+		message
+		WHERE
+		recver_id = #{recver_id}
+	</select>
+	
+	<update id="updateMessageReadStatus"  >
+ UPDATE message
+ <trim prefix="set" suffixOverrides=",">
+  <if test="status!=null">status=#{status},</if>
+ </trim>
+ WHERE id=#{msg_id}
+</update>
+</mapper>

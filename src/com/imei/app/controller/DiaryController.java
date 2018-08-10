@@ -33,6 +33,7 @@ import com.imei.app.service.DiaryService;
 import com.imei.app.service.DiaryTypeService;
 import com.imei.app.service.ItemService;
 import com.imei.app.service.UserService;
+import com.imei.app.util.DateUtil;
 import com.imei.app.util.Result;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
@@ -52,6 +53,7 @@ public class DiaryController {
 	CommentService commentService;
 	@Autowired
 	UserService userService;
+
 	@RequestMapping(value = "/getAllDiaryTypes", method = RequestMethod.GET, produces = {
 			"application/json; charset=utf-8" })
 	@ResponseBody
@@ -134,32 +136,51 @@ public class DiaryController {
 		}
 		return new Result(0, "success", dto);
 	}
-	
-	
+
 	// 根据日记id，查询评论列表
-		@RequestMapping(value = "/listComment", method = RequestMethod.GET, produces = {
-				"application/json; charset=utf-8" })
-		@ResponseBody
-		private Result listComment(@Param("diaryid") long diaryid,@Param("index")int index,@Param("count")int count) {
-			List<Comment> list = commentService.queryCommentListByDiaryId(diaryid,index,count);
-			if (list == null || list.size()==0) {
-				return new Result(0, "该日记无评 ");
-			}
-			List<CommentDTO> datas = new ArrayList<CommentDTO>();
-			for(Comment comment : list) {
-				CommentDTO dto = new CommentDTO();
-				dto.setId(comment.getId());
-				dto.setDiaryId(comment.getDiaryId());
-				dto.setUserId(comment.getUserId());
-				dto.setContent(comment.getContent());
-				dto.setPublishDate(comment.getPublishDate());
-				User user = userService.findUser(comment.getUserId());
-				if (user!=null) {
-					dto.setAuthorName(user.getNickName());
-					dto.setAuthorAvatar(user.getAvatar());
-				}
-				datas.add(dto);
-			}
-			return new Result(0, "success", datas);
+	@RequestMapping(value = "/listComment", method = RequestMethod.GET, produces = {
+			"application/json; charset=utf-8" })
+	@ResponseBody
+	private Result listComment(@Param("diaryid") long diaryid, @Param("index") int index, @Param("count") int count) {
+		List<Comment> list = commentService.queryCommentListByDiaryId(diaryid, index, count);
+		if (list == null || list.size() == 0) {
+			return new Result(0, "该日记无评 ");
 		}
+		List<CommentDTO> datas = new ArrayList<CommentDTO>();
+		for (Comment comment : list) {
+			CommentDTO dto = new CommentDTO();
+			dto.setId(comment.getId());
+			dto.setDiaryId(comment.getDiaryId());
+			dto.setUserId(comment.getUserId());
+			dto.setContent(comment.getContent());
+			dto.setPublishDate(comment.getPublishDate());
+			User user = userService.findUser(comment.getUserId());
+			if (user != null) {
+				dto.setAuthorName(user.getNickName());
+				dto.setAuthorAvatar(user.getAvatar());
+			}
+			datas.add(dto);
+		}
+		return new Result(0, "success", datas);
+	}
+
+	// 发布评论
+	@RequestMapping(value = "/submitComment", method = RequestMethod.GET, produces = {
+			"application/json; charset=utf-8" })
+	@ResponseBody
+	private Result submitComment(@Param("diaryid") long diaryid, @Param("content") String content,
+			@Param("userId") long userId) {
+		Diary diary = diaryService.queryById(diaryid);
+		if (diary == null) {
+			return new Result(-1, "评论失败，日记id不存在");
+		}
+		Comment comment = new Comment(diaryid, userId, DateUtil.getNowStr(), content);
+		int id = commentService.addComment(comment);
+		if (id > 0) {
+			return new Result(0, "评论成功");
+		} else {
+			return new Result(-1, "评论失败,请稍候重试");
+		}
+	}
+	
 }

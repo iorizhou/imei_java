@@ -17,8 +17,15 @@ public class Item {
 	private long parentParentTypeId;
 	private long discountPrice;
 	private long origPrice;
+	private String relateItemid;   //该项目关联的兄弟项目.比如某个医院发了4个瘦脸针的项目， 2 3 4项目则是这个1项目的关联项目,APP上显示为服务规格 .id已，连接
 	
 	
+	public String getRelateItemid() {
+		return relateItemid;
+	}
+	public void setRelateItemid(String relateItemid) {
+		this.relateItemid = relateItemid;
+	}
 	public long getDiscountPrice() {
 		return discountPrice;
 	}

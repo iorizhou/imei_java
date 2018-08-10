@@ -1,5 +1,7 @@
 package com.imei.app.dto;
 
+import java.util.List;
+
 public class ItemDTO {
 	private long id;
 	private String name;
@@ -14,8 +16,14 @@ public class ItemDTO {
 	private long typeId;
 	private long parentTypeId;
 	private long parentParentTypeId;
-	
+	private String hospitalCover;
+	private String hospitalName;
+	private String hospitalAddr;
+	private String hospitalWebsite;
+	private String hospitalGps;
 	private String city;
+	private List<RelateItemDTO> relateDatas;
+	
 	
 	public String getCover() {
 		return cover;
@@ -124,6 +132,42 @@ public class ItemDTO {
 		this.parentTypeId = parentTypeId;
 		this.parentParentTypeId = parentParentTypeId;
 		this.city = city;
+	}
+	public String getHospitalCover() {
+		return hospitalCover;
+	}
+	public void setHospitalCover(String hospitalCover) {
+		this.hospitalCover = hospitalCover;
+	}
+	public String getHospitalName() {
+		return hospitalName;
+	}
+	public void setHospitalName(String hospitalName) {
+		this.hospitalName = hospitalName;
+	}
+	public String getHospitalAddr() {
+		return hospitalAddr;
+	}
+	public void setHospitalAddr(String hospitalAddr) {
+		this.hospitalAddr = hospitalAddr;
+	}
+	public String getHospitalWebsite() {
+		return hospitalWebsite;
+	}
+	public void setHospitalWebsite(String hospitalWebsite) {
+		this.hospitalWebsite = hospitalWebsite;
+	}
+	public String getHospitalGps() {
+		return hospitalGps;
+	}
+	public void setHospitalGps(String hospitalGps) {
+		this.hospitalGps = hospitalGps;
+	}
+	public List<RelateItemDTO> getRelateDatas() {
+		return relateDatas;
+	}
+	public void setRelateDatas(List<RelateItemDTO> relateDatas) {
+		this.relateDatas = relateDatas;
 	}
 	
 	
