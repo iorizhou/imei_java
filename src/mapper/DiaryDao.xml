@@ -43,4 +43,36 @@
 		WHERE
 		id = #{id}
 	</select>
+	<select id="getCountByItemId" resultType="java.lang.Integer">
+		SELECT
+		count(1)
+		FROM
+		diary
+		WHERE
+		item_id = #{item_id}
+	</select>
+	<select id="getListByItemId" resultType="Diary">
+		SELECT
+		id,
+		author,
+		publish_time,
+		author_avatar,
+		cover_img,
+		simple_content,
+		tag,
+		item_id,
+		item_name,
+		item_discount,
+		view_count,
+		comment_count,
+		diary_type_id
+		FROM
+		diary
+		WHERE
+		item_id = #{item_id}
+		ORDER BY
+		publish_time DESC,view_count DESC
+		LIMIT
+		#{index},#{count}
+	</select>
 </mapper>

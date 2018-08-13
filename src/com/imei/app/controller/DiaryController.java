@@ -182,5 +182,30 @@ public class DiaryController {
 			return new Result(-1, "评论失败,请稍候重试");
 		}
 	}
-	
+
+	// 根据整容项目ID，查询下面的日记列表数目count
+	@RequestMapping(value = "/queryDiaryCountByItemId", method = RequestMethod.GET, produces = {
+			"application/json; charset=utf-8" })
+	@ResponseBody
+	private Result queryDiaryCountByItemId(@Param("itemId") long itemId) {
+		int count = diaryService.getCountByItemId(itemId);
+		return new Result<>(0, "success", count);
+	}
+
+	// 根据整容项目ID，查询下面的日记列表
+		@RequestMapping(value = "/queryDiaryListByItemId", method = RequestMethod.GET, produces = {
+				"application/json; charset=utf-8" })
+		@ResponseBody
+		private Result queryDiaryListByItemId(@Param("itemId") long itemId,@Param("index")int index,@Param("count")int count) {
+			List<Diary> list = diaryService.getListByItemId(itemId, index, count);
+			if (list==null || list.size() == 0) {
+				return new Result(-1,"该项目下没有日记");
+			}
+			List<DiaryDTO> datas = new ArrayList<DiaryDTO>();
+			for(Diary diary : list) {
+				DiaryDTO dto = new DiaryDTO(diary.getId(), diary.getAuthor(), diary.getPublishTime(), diary.getAuthorAvatar(), diary.getCoverImg(), diary.getSimpleContent(), diary.getTag(), diary.getItemId(), diary.getItemName(), diary.getItemDiscount(), diary.getViewCount(), diary.getCommentCount(), diary.getDiaryTypeId());
+				datas.add(dto);
+			}
+			return new Result(0,"success",datas);
+		}
 }

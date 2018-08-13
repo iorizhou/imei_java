@@ -23,6 +23,16 @@ public class DiaryServiceImpl implements DiaryService {
 		// TODO Auto-generated method stub
 		return diaryDao.queryById(id);
 	}
+	@Override
+	public int getCountByItemId(long itemId) {
+		// TODO Auto-generated method stub
+		return diaryDao.getCountByItemId(itemId);
+	}
+	@Override
+	public List<Diary> getListByItemId(long itemId, int index, int count) {
+		// TODO Auto-generated method stub
+		return diaryDao.getListByItemId(itemId, index, count);
+	}
 	
 	
 
