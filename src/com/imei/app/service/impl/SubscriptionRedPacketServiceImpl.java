@@ -32,6 +32,12 @@ public class SubscriptionRedPacketServiceImpl implements SubscriptionRedPacketSe
 		// TODO Auto-generated method stub
 		return dao.queryListByUserId(userId,status);
 	}
+
+	@Override
+	public SubscriptionRedPacket queryById(long id,long userId) {
+		// TODO Auto-generated method stub
+		return dao.queryById(id,userId);
+	}
 	
 	
 	

@@ -30,4 +30,11 @@ public class WKRedPacketServiceImpl implements WKRedPacketService {
 		return dao.queryListByUserId(userId, status);
 	}
 
+	@Override
+	public WKRedPacket queryById(long id, long userId) {
+		// TODO Auto-generated method stub
+		return dao.queryById(id, userId);
+	}
+	
+	
 }

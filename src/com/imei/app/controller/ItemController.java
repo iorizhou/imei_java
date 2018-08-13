@@ -36,14 +36,36 @@ public class ItemController {
     private Result<ItemDTO> detail(@PathVariable("id") Long id) {
         System.out.println("detail id = "+id);
         Item item = itemService.queryById(id);
+        if (item==null) {
+			return new Result(-1,"项目不存在");
+		}
         ItemDTO dto = new ItemDTO();
-        
-        if (item == null) {
-            return new Result<ItemDTO>(0,"����Ŀ������");
-        }
-        
-        dto.setId(item.getId());
-        dto.setName(item.getName());
+    	dto.setCity(item.getCity());
+    	dto.setCover(item.getCover());
+    	dto.setDetailsUrl(item.getDetailsUrl());
+    	dto.setDjCount(item.getDjCount());
+    	dto.setDoctorId(item.getDoctorId());
+    	dto.setDoctorName(item.getDoctorName());
+    	if (dto.getHospitalId()!=0) {
+			Hospital hospital = hospitalService.queryById(dto.getHospitalId());
+			if (hospital!=null) {
+				dto.setHospitalAddr(hospital.getAddr());
+				dto.setHospitalCover(hospital.getAvatar());
+				dto.setHospitalGps(hospital.getGps());
+				dto.setHospitalName(hospital.getName());
+				dto.setHospitalWebsite(hospital.getWebsite());
+			}
+		}
+    	dto.setHospitalId(item.getHospitalId());
+    	dto.setId(item.getId());
+    	dto.setJumpType(item.getJumpType());
+    	dto.setJumpUrl(item.getJumpUrl());
+    	dto.setName(item.getName());
+    	dto.setParentParentTypeId(item.getParentParentTypeId());
+    	dto.setParentTypeId(item.getParentTypeId());
+//    	dto.setRelateDatas(item.getre);
+    	dto.setSortOrder(item.getSortOrder());
+    	dto.setTypeId(item.getTypeId());
         return new Result<ItemDTO>(0,"success",dto);
     }
 	
@@ -58,7 +80,33 @@ public class ItemController {
 		} 
         List<ItemDTO> datas = new ArrayList<ItemDTO>();
         for(Item item :list) {
-        	ItemDTO dto = new ItemDTO(item.getId(), item.getName(), item.getCover(), item.getDoctorName(), item.getDoctorId(), item.getJumpType(), item.getJumpUrl(), item.getSortOrder(), item.getDetailsUrl(), item.getHospitalId(), item.getTypeId(), item.getParentTypeId(), item.getParentParentTypeId(),item.getCity());
+        	ItemDTO dto = new ItemDTO();
+        	dto.setCity(item.getCity());
+        	dto.setCover(item.getCover());
+        	dto.setDetailsUrl(item.getDetailsUrl());
+        	dto.setDjCount(item.getDjCount());
+        	dto.setDoctorId(item.getDoctorId());
+        	dto.setDoctorName(item.getDoctorName());
+        	if (dto.getHospitalId()!=0) {
+    			Hospital hospital = hospitalService.queryById(dto.getHospitalId());
+    			if (hospital!=null) {
+    				dto.setHospitalAddr(hospital.getAddr());
+    				dto.setHospitalCover(hospital.getAvatar());
+    				dto.setHospitalGps(hospital.getGps());
+    				dto.setHospitalName(hospital.getName());
+    				dto.setHospitalWebsite(hospital.getWebsite());
+    			}
+    		}
+        	dto.setHospitalId(item.getHospitalId());
+        	dto.setId(item.getId());
+        	dto.setJumpType(item.getJumpType());
+        	dto.setJumpUrl(item.getJumpUrl());
+        	dto.setName(item.getName());
+        	dto.setParentParentTypeId(item.getParentParentTypeId());
+        	dto.setParentTypeId(item.getParentTypeId());
+//        	dto.setRelateDatas(item.getre);
+        	dto.setSortOrder(item.getSortOrder());
+        	dto.setTypeId(item.getTypeId());
         	datas.add(dto);
         }
         return new Result<List<ItemDTO>>(0,"success",datas);
@@ -72,8 +120,14 @@ public class ItemController {
         if (item == null) {
 			return new Result(-1,"项目不存在");
 		}
-        ItemDTO dto = new ItemDTO(item.getId(), item.getName(), item.getCover(), item.getDoctorName(), item.getDoctorId(), item.getJumpType(), item.getJumpUrl(), item.getSortOrder(), item.getDetailsUrl(), item.getHospitalId(), item.getTypeId(), item.getParentTypeId(), item.getParentParentTypeId(), item.getCity());
-        if (dto.getHospitalId()!=0) {
+        ItemDTO dto = new ItemDTO();
+    	dto.setCity(item.getCity());
+    	dto.setCover(item.getCover());
+    	dto.setDetailsUrl(item.getDetailsUrl());
+    	dto.setDjCount(item.getDjCount());
+    	dto.setDoctorId(item.getDoctorId());
+    	dto.setDoctorName(item.getDoctorName());
+    	if (dto.getHospitalId()!=0) {
 			Hospital hospital = hospitalService.queryById(dto.getHospitalId());
 			if (hospital!=null) {
 				dto.setHospitalAddr(hospital.getAddr());
@@ -83,6 +137,16 @@ public class ItemController {
 				dto.setHospitalWebsite(hospital.getWebsite());
 			}
 		}
+    	dto.setHospitalId(item.getHospitalId());
+    	dto.setId(item.getId());
+    	dto.setJumpType(item.getJumpType());
+    	dto.setJumpUrl(item.getJumpUrl());
+    	dto.setName(item.getName());
+    	dto.setParentParentTypeId(item.getParentParentTypeId());
+    	dto.setParentTypeId(item.getParentTypeId());
+//    	dto.setRelateDatas(item.getre);
+    	dto.setSortOrder(item.getSortOrder());
+    	dto.setTypeId(item.getTypeId());
 //        if (item.getRelateItemid()!=null) {
 //			String[] relateList = item.getRelateItemid().split(",");
 //			if (relateList.length>0) {

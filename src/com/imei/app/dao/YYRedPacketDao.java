@@ -11,4 +11,5 @@ public interface YYRedPacketDao {
 	int save(YYRedPacket packet);
 	int use(@Param("id")long id,@Param("status")int status);
 	List<YYRedPacket> queryListByUserId(@Param("user_id")long userId,@Param("status")int status);
+	YYRedPacket queryById(@Param("id")long id,@Param("user_id")long userId);
 }

@@ -23,4 +23,19 @@ public class DateUtil {
 			return false;
 		}
 	}
+	
+	public static String getDateAfter(long miliSeconds) {
+		String result = "";
+		try {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			long cur = System.currentTimeMillis();
+			long after = cur + miliSeconds;
+			Date date = new Date(after);
+			return simpleDateFormat.format(date);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "";
+	}
 }

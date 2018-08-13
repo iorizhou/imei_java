@@ -33,4 +33,11 @@ public class YYRedPacketServiceImpl implements YYRedPacketService {
 		return dao.queryListByUserId(userId, status);
 	}
 
+	@Override
+	public YYRedPacket queryById(long id, long userId) {
+		// TODO Auto-generated method stub
+		return dao.queryById(id, userId);
+	}
+	
+	
 }

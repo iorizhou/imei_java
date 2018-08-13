@@ -18,8 +18,16 @@ public class Item {
 	private long discountPrice;
 	private long origPrice;
 	private String relateItemid;   //该项目关联的兄弟项目.比如某个医院发了4个瘦脸针的项目， 2 3 4项目则是这个1项目的关联项目,APP上显示为服务规格 .id已，连接
+	private long djCount;   //该项目的订金
 	
 	
+	
+	public long getDjCount() {
+		return djCount;
+	}
+	public void setDjCount(long djCount) {
+		this.djCount = djCount;
+	}
 	public String getRelateItemid() {
 		return relateItemid;
 	}
@@ -132,8 +140,8 @@ public class Item {
 		this.parentParentTypeId = parentParentTypeId;
 	}
 	public Item(String name, String cover, String doctorName, long doctorId, int jumpType, String jumpUrl,
-			int sortOrder, String detailsUrl, long hospitalId, long typeId, long parentTypeId,
-			long parentParentTypeId,String city) {
+			int sortOrder, String detailsUrl, long hospitalId, String city, long typeId, long parentTypeId,
+			long parentParentTypeId, long discountPrice, long origPrice, String relateItemid, long djCount) {
 		super();
 		this.name = name;
 		this.cover = cover;
@@ -144,11 +152,16 @@ public class Item {
 		this.sortOrder = sortOrder;
 		this.detailsUrl = detailsUrl;
 		this.hospitalId = hospitalId;
+		this.city = city;
 		this.typeId = typeId;
 		this.parentTypeId = parentTypeId;
 		this.parentParentTypeId = parentParentTypeId;
-		this.city = city;
+		this.discountPrice = discountPrice;
+		this.origPrice = origPrice;
+		this.relateItemid = relateItemid;
+		this.djCount = djCount;
 	}
+	
 	
 	
 	

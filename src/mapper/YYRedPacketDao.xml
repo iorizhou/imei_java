@@ -30,7 +30,28 @@
 		ORDER BY
 		end_date DESC,amount DESC
 	</select>
-	
+	<select id="queryById" resultType="YYRedPacket">
+		SELECT
+		id,
+		name,
+		use_condition,
+		user_id,
+		start_date,
+		end_date,
+		source,
+		amount,
+		condition_amount,
+		status,
+		hospital_id
+		FROM
+		yy_red_packet
+		WHERE
+		user_id = #{user_id}
+		AND
+		id = #{id}
+		ORDER BY
+		end_date DESC,amount DESC
+	</select>
 	
 	
 	<update id="use"  parameterType="java.lang.Integer">

@@ -10,4 +10,5 @@ public interface WKRedPacketDao {
 	int save(WKRedPacket packet);
 	int use(@Param("id")long id,@Param("status")int status);
 	List<WKRedPacket> queryListByUserId(@Param("user_id")long userId,@Param("status")int status);
+	WKRedPacket queryById(@Param("id")long id,@Param("user_id")long userId);
 }

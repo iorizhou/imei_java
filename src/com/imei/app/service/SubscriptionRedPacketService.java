@@ -10,4 +10,5 @@ public interface SubscriptionRedPacketService {
 	int save(SubscriptionRedPacket packet);
 	int use(long id,int status);
 	List<SubscriptionRedPacket> queryListByUserId(long userId,int status);
+	SubscriptionRedPacket queryById(long id,long userId);
 }

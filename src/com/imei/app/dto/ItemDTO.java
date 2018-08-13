@@ -23,8 +23,16 @@ public class ItemDTO {
 	private String hospitalGps;
 	private String city;
 	private List<RelateItemDTO> relateDatas;
+	private long djCount;
 	
 	
+	
+	public long getDjCount() {
+		return djCount;
+	}
+	public void setDjCount(long djCount) {
+		this.djCount = djCount;
+	}
 	public String getCover() {
 		return cover;
 	}
@@ -114,9 +122,11 @@ public class ItemDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public ItemDTO(long id, String name, String cover, String doctorName, long doctorId, int jumpType, String jumpUrl,
-			int sortOrder, String detailsUrl, long hospitalId, long typeId, long parentTypeId,
-			long parentParentTypeId,String city) {
+			int sortOrder, String detailsUrl, long hospitalId, long typeId, long parentTypeId, long parentParentTypeId,
+			String hospitalCover, String hospitalName, String hospitalAddr, String hospitalWebsite, String hospitalGps,
+			String city, List<RelateItemDTO> relateDatas, long djCount) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -131,7 +141,14 @@ public class ItemDTO {
 		this.typeId = typeId;
 		this.parentTypeId = parentTypeId;
 		this.parentParentTypeId = parentParentTypeId;
+		this.hospitalCover = hospitalCover;
+		this.hospitalName = hospitalName;
+		this.hospitalAddr = hospitalAddr;
+		this.hospitalWebsite = hospitalWebsite;
+		this.hospitalGps = hospitalGps;
 		this.city = city;
+		this.relateDatas = relateDatas;
+		this.djCount = djCount;
 	}
 	public String getHospitalCover() {
 		return hospitalCover;

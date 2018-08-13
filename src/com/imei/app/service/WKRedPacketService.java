@@ -8,4 +8,5 @@ public interface WKRedPacketService {
 	int save(WKRedPacket packet);
 	int use(long id,int status);
 	List<WKRedPacket> queryListByUserId(long userId,int status);
+	WKRedPacket queryById(long id,long userId);
 }

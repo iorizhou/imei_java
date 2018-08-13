@@ -17,7 +17,13 @@
             sort_order,
             details_url,
             hospital_id,
-            city
+            city,
+            type_id,
+            parent_type_id,
+            parent_parent_type_id,
+            dj_count,
+            discount_price,
+            orig_price
         FROM
             item
         WHERE
@@ -36,7 +42,13 @@
             sort_order,
             details_url,
             hospital_id,
-            city
+            city,
+            type_id,
+            parent_type_id,
+            parent_parent_type_id,
+            dj_count,
+            discount_price,
+            orig_price
         FROM
             item
         WHERE
@@ -61,7 +73,10 @@
             city,
             type_id,
             parent_type_id,
-            parent_parent_type_id
+            parent_parent_type_id,
+            dj_count,
+            discount_price,
+            orig_price
         FROM
             item
         WHERE
