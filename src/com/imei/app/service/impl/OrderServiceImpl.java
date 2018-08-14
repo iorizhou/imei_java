@@ -53,6 +53,12 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		return orderDao.queryById(id);
 	}
+
+	@Override
+	public List<Order> queryListByUserIdWithStatus(long userId, int status) {
+		// TODO Auto-generated method stub
+		return orderDao.queryListByUserIdWithStatus(userId, status);
+	}
 	
 	
 }

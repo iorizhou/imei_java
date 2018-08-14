@@ -15,4 +15,7 @@ public interface OrderDao {
 	Order queryByIdWithUserId(@Param("id")long id,@Param("userId")long userId);
 	List<Order> queryListByUserId(@Param("userId")long userId);
 	Order queryById(@Param("id")long id);
+	List<Order> queryListByUserIdWithStatus(@Param("userId")long userId,@Param("status")int status);
+	Order queryPayInfo(@Param("userId")long userId,@Param("id")long id);
 }
+ 

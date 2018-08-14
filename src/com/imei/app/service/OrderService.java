@@ -14,5 +14,6 @@ public interface OrderService {
 	int consume(long id,String consumeCode,long consumeUserId);
 	Order queryByIdWithUserId(long id,long userId);
 	List<Order> queryListByUserId(long userId);
+	List<Order> queryListByUserIdWithStatus(long userId,int status);
 	Order queryById(long id);
 }
