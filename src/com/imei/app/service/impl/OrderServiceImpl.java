@@ -1,5 +1,7 @@
 package com.imei.app.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,4 +36,23 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.consume(id, consumeCode,consumeUserId);
 	}
 
+	@Override
+	public Order queryByIdWithUserId(long id, long userId) {
+		// TODO Auto-generated method stub
+		return orderDao.queryByIdWithUserId(id, userId);
+	}
+
+	@Override
+	public List<Order> queryListByUserId(long userId) {
+		// TODO Auto-generated method stub
+		return orderDao.queryListByUserId(userId);
+	}
+
+	@Override
+	public Order queryById(long id) {
+		// TODO Auto-generated method stub
+		return orderDao.queryById(id);
+	}
+	
+	
 }

@@ -9,4 +9,102 @@
   values(#{itemName}, #{itemId}, #{phoneNum}, #{message}, #{totalPrice}, #{buyCount}, #{djRedPacketId}, #{wkRedPacketId},#{yyRedPacketId},#{djTotalCount},#{needPayCount},#{payedCount},#{djDiscount},#{wkCount},#{payStatus},#{payOrderId},#{payChannel},#{orderStatus},#{orderInvalidTime},#{consumeCode},#{userId},#{consumeUserId},#{createDate});
 </insert>
 
+
+<select id="queryByIdWithUserId" resultType="Order">
+		SELECT
+		id,
+		item_name,
+		item_id,
+		phone_num,
+		message,
+		total_price,
+		buy_count,
+		dj_red_packet_id,
+		wk_red_packet_id,
+		yy_red_packet_id,
+		dj_total_count,
+		need_pay_count,
+		payed_count,
+		dj_discount,
+		wk_count,
+		pay_status,
+		pay_order_id,
+		pay_channel,
+		order_status,
+		order_invalid_time,
+		consume_code,
+		user_id,
+		consume_user_id,
+		create_date
+		FROM
+		orderinfo
+		WHERE
+		user_id = #{userId}
+		AND
+		id = #{id}
+	</select>
+	
+	<select id="queryById" resultType="Order">
+		SELECT
+		id,
+		item_name,
+		item_id,
+		phone_num,
+		message,
+		total_price,
+		buy_count,
+		dj_red_packet_id,
+		wk_red_packet_id,
+		yy_red_packet_id,
+		dj_total_count,
+		need_pay_count,
+		payed_count,
+		dj_discount,
+		wk_count,
+		pay_status,
+		pay_order_id,
+		pay_channel,
+		order_status,
+		order_invalid_time,
+		consume_code,
+		user_id,
+		consume_user_id,
+		create_date
+		FROM
+		orderinfo
+		WHERE
+		id = #{id}
+	</select>
+	
+	<select id="queryListByUserId" resultType="Order">
+		SELECT
+		id,
+		item_name,
+		item_id,
+		phone_num,
+		message,
+		total_price,
+		buy_count,
+		dj_red_packet_id,
+		wk_red_packet_id,
+		yy_red_packet_id,
+		dj_total_count,
+		need_pay_count,
+		payed_count,
+		dj_discount,
+		wk_count,
+		pay_status,
+		pay_order_id,
+		pay_channel,
+		order_status,
+		order_invalid_time,
+		consume_code,
+		user_id,
+		consume_user_id,
+		create_date
+		FROM
+		orderinfo
+		WHERE
+		user_id = #{userId}
+	</select>
 </mapper>

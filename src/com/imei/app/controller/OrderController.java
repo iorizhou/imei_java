@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.imei.app.dto.OrderDTO;
 import com.imei.app.entity.Item;
 import com.imei.app.entity.Order;
 import com.imei.app.entity.SubscriptionRedPacket;
@@ -85,4 +86,41 @@ public class OrderController {
 		}
 		return new Result(0, "success",orderId);
 	}
+	
+	@RequestMapping(value ="/detail", method = RequestMethod.GET, produces = {
+    "application/json; charset=utf-8" })
+	@ResponseBody
+	private Result detail(@Param("userId")long userId,@Param("orderId")long orderId) {
+		Order order = orderService.queryByIdWithUserId(orderId, userId);
+		if (order==null) {
+			return new Result(-1, "订单不存在");
+		}
+		OrderDTO dto = new OrderDTO();
+		dto.setBuyCount(order.getBuyCount());
+		dto.setConsumeCode(order.getConsumeCode());
+		dto.setConsumeUserId(order.getConsumeUserId());
+		dto.setCreateDate(order.getCreateDate());
+		dto.setDjDiscount(order.getDjDiscount());
+		dto.setDjRedPacketId(order.getDjRedPacketId());
+		dto.setDjTotalCount(order.getDjTotalCount());
+		dto.setId(order.getId());
+		dto.setItemId(order.getItemId());
+		dto.setItemName(order.getItemName());
+		dto.setMessage(order.getMessage());
+		dto.setNeedPayCount(order.getNeedPayCount());
+		dto.setOrderInvalidTime(order.getOrderInvalidTime());
+		dto.setOrderStatus(order.getOrderStatus());
+		dto.setPayChannel(order.getPayChannel());
+		dto.setPayedCount(order.getPayedCount());
+		dto.setPayOrderId(order.getPayOrderId());
+		dto.setPayStatus(order.getPayStatus());
+		dto.setPhoneNum(order.getPhoneNum());
+		dto.setTotalPrice(order.getTotalPrice());
+		dto.setUserId(order.getUserId());
+		dto.setWkCount(order.getWkCount());
+		dto.setWkRedPacketId(order.getWkRedPacketId());
+		dto.setYyRedPacketId(order.getYyRedPacketId());
+		return new Result(0,"success",dto);
+	}
+	
 }
