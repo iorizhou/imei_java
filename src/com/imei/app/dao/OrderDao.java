@@ -17,5 +17,6 @@ public interface OrderDao {
 	Order queryById(@Param("id")long id);
 	List<Order> queryListByUserIdWithStatus(@Param("userId")long userId,@Param("status")int status);
 	Order queryPayInfo(@Param("userId")long userId,@Param("id")long id);
+	int setOrderPayed(@Param("id")long id,@Param("payOrderId")String payOrderId,@Param("payChannel")int payChannel,@Param("payedCount")long payedCount);
 }
  

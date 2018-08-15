@@ -16,4 +16,5 @@ public interface OrderService {
 	List<Order> queryListByUserId(long userId);
 	List<Order> queryListByUserIdWithStatus(long userId,int status);
 	Order queryById(long id);
+	int setOrderPayed(long id,String payOrderId,int payChannel,long payedCount);
 }

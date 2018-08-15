@@ -140,4 +140,15 @@
 		AND
 		order_status = #{status}
 	</select>
+	
+	<update id="setOrderPayed"  >
+ UPDATE orderinfo
+ set
+  pay_status=1,
+  payed_count=#{payedCount},
+  pay_order_id=#{payOrderId},
+  pay_channel=#{payChannel}
+ WHERE id=#{id}
+</update>
+	
 </mapper>

@@ -30,4 +30,5 @@ public class Constants {
 			"JmcDpBCtaUE4hNh/gnmt+9HH0veBDHnW+toOC+01cYIcruNiFUDy1B+337pYHrMP\r\n" + 
 			"HBNepNIf4JagiIqxxoW7uHEUnMm5NpwyEhB5UF7tCFDetouYhNZRvi8IMqeCIAc0\r\n" + 
 			"oN4QYXEpYrPQGgQrqZ1aTA==";
+	public static final String ALIPAY_NOTIFY_RECEIVER = "http://app.imei666.com/order/orderNotify/alipay";
 }

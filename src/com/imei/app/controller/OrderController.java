@@ -1,7 +1,12 @@
 package com.imei.app.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.imei.app.dto.OrderDTO;
@@ -233,5 +239,48 @@ public class OrderController {
 		}
 	}
 	
-	
+	//给支付宝server调用的异步通知接口，以接收订单真实支付状态
+	@RequestMapping(value ="/orderNotify/alipay", method = RequestMethod.POST, produces = {
+    "application/json; charset=utf-8" })
+	@ResponseBody
+	private Result alipayNotify(HttpServletRequest request) {
+		Map<String, String[]> paramMap = request.getParameterMap();
+		Map<String, String> params = new HashMap<String, String>();
+		for (Iterator<String> iter = paramMap.keySet().iterator(); iter.hasNext();)
+        {
+            String name = (String) iter.next();
+            String[] values = paramMap.get(name);
+            String valueStr = "";
+            for (int i = 0; i < values.length; i++)
+            {
+                valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
+            }
+            params.put(name, valueStr);
+        }
+		
+		try {
+			if (AlipaySignature.rsaCheckV1(params, Constants.ALIPAY_PUBLIC_KEY, "utf-8")) {
+				long orderId = Long.parseLong(params.get("out_trade_no"));
+				long totalAmount = Long.parseLong(params.get("total_amount"));
+				String payOrderId = params.get("trade_no");
+				String appId = params.get("app_id");
+				String tradeStatus = params.get("trade_status");
+				Order order = orderService.queryById(orderId);
+				if (order==null) {
+					return new Result<>(-1, "验签失败");
+				}
+				if (order.getNeedPayCount()==totalAmount&&appId.equals(Constants.ALIPAY_APPID)) {
+					if (tradeStatus.equals("TRADE_SUCCESS")||tradeStatus.equals("TRADE_FINISHED")) {
+						orderService.setOrderPayed(orderId, payOrderId,0,totalAmount);
+						return new Result<>(0, "success");
+					}
+				}
+			}else {
+				return new Result<>(-1, "验签失败");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Result<>(-1, "验签失败");
+	}
 }

@@ -2,6 +2,7 @@ package com.imei.app.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,12 @@ public class OrderServiceImpl implements OrderService {
 	public List<Order> queryListByUserIdWithStatus(long userId, int status) {
 		// TODO Auto-generated method stub
 		return orderDao.queryListByUserIdWithStatus(userId, status);
+	}
+
+	@Override
+	public int setOrderPayed(long id, String payOrderId,int payChannel,long payedCount) {
+		// TODO Auto-generated method stub
+		return orderDao.setOrderPayed(id, payOrderId,payChannel,payedCount);
 	}
 	
 	
