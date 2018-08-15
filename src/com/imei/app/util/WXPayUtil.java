@@ -1,6 +1,7 @@
 package com.imei.app.util;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -17,6 +18,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+import javax.servlet.http.HttpServletRequest;
 
 public class WXPayUtil {
 	public static SortedMap<Object, Object> getWXPrePayID()
@@ -167,5 +169,44 @@ public class WXPayUtil {
             e.printStackTrace();
         }
         return null;
+    }
+	
+	public static String reciverWx(HttpServletRequest request) throws IOException
+    {
+        InputStream inputStream;
+        StringBuffer sb = new StringBuffer();
+        inputStream = request.getInputStream();
+        String s;
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+        while ((s = in.readLine()) != null)
+        {
+            sb.append(s);
+        }
+        in.close();
+        inputStream.close();
+        return sb.toString();
+    }
+	
+	public static boolean isTenpaySign(String characterEncoding, SortedMap<Object, Object> packageParams)
+    {
+        StringBuffer sb = new StringBuffer();
+        Set es = packageParams.entrySet();
+        Iterator it = es.iterator();
+        while (it.hasNext())
+        {
+            Map.Entry entry = (Map.Entry) it.next();
+            String k = (String) entry.getKey();
+            String v = (String) entry.getValue();
+            if (!"sign".equals(k) && null != v && !"".equals(v))
+            {
+                sb.append(k + "=" + v + "&");
+            }
+        }
+        sb.append("key=" + Constants.WXPAY_KEY);
+        // 算出摘要
+        String mysign = MD5Util.md5(sb.toString()).toLowerCase();
+        String tenpaySign = ((String) packageParams.get("sign")).toLowerCase();
+        // System.out.println(tenpaySign + " " + mysign);
+        return tenpaySign.equals(mysign);
     }
 }
