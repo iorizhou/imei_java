@@ -31,4 +31,14 @@ public class Constants {
 			"HBNepNIf4JagiIqxxoW7uHEUnMm5NpwyEhB5UF7tCFDetouYhNZRvi8IMqeCIAc0\r\n" + 
 			"oN4QYXEpYrPQGgQrqZ1aTA==";
 	public static final String ALIPAY_NOTIFY_RECEIVER = "http://app.imei666.com/order/orderNotify/alipay";
+	
+	
+	
+	//微信支付相关
+	public static final String WXPAY_APPID = "111";
+	public static final String WXPAY_MCHID = "111";
+	public static final String WXPAY_KEY = "222";
+	public static final String WXPAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+	public static final String WXPAY_NOTIFY_RECEIVER = "http://app.imei666.com/order/orderNotify/wxpay";
+	
 }

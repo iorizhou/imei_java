@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
@@ -37,6 +42,7 @@ import com.imei.app.service.YYRedPacketService;
 import com.imei.app.util.Constants;
 import com.imei.app.util.DateUtil;
 import com.imei.app.util.Result;
+import com.imei.app.util.WXPayUtil;
 
 @Controller
 @RequestMapping("/order")
@@ -282,5 +288,49 @@ public class OrderController {
 			e.printStackTrace();
 		}
 		return new Result<>(-1, "验签失败");
+	}
+	
+	// 微信支付获取预支付信息
+	// 获取支付宝订单预支付信息 app在准备支付前，需要来后端拉取支付信息，成功后才会调用支付宝sdk去支付
+	@RequestMapping(value = "/getWXpayInfo", method = RequestMethod.GET, produces = {
+			"application/json; charset=utf-8" })
+	@ResponseBody
+	private Result getWXpayInfo(@Param("orderId") long orderId, @Param("userId") long userId) {
+		Order order = orderService.queryByIdWithUserId(orderId, userId);
+		if (order == null) {
+			return new Result<>(-1, "订单不存在");
+		}
+		if (order.getOrderStatus() != 0) {
+			return new Result<>(-1, "该笔订单不能完成支付动作");
+		}
+		if (order.getPayStatus() == 1) {
+			return new Result<>(-1, "订单已支付");
+		}
+		try {
+			HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+			String remoteAddr = req.getRemoteAddr();
+
+			SortedMap<Object, Object> parameters = WXPayUtil.getWXPrePayID();
+			//商品信息标题
+			parameters.put("body", "i美"+order.getItemName());
+			parameters.put("spbill_create_ip", remoteAddr);
+            parameters.put("out_trade_no",order.getId()); // 订单id这里我的订单id生成规则是订单id+时间
+            parameters.put("total_fee", "1"); // 测试时，每次支付一分钱，微信支付所传的金额是以分为单位的，因此实际开发中需要x100
+//             parameters.put("total_fee", order.getNeedPayCount()*100+""); // 上线后，将此代码放开
+            String sign = WXPayUtil.createSign("UTF-8", parameters);
+            parameters.put("sign", sign);
+            String requestXML = WXPayUtil.getRequestXml(parameters); // 获取xml结果
+            String result = WXPayUtil.httpsRequest(Constants.WXPAY_URL, "POST",
+                    requestXML);
+            SortedMap<Object, Object> parMap = WXPayUtil.startWXPay(result);
+            if (parMap != null)
+            {
+                return new Result<>(0, "success",JSON.toJSONString(parMap));
+            }else {
+            	return new Result<>(-1, "创建微信支付订单失败");
+			}
+		} catch (Exception e) {
+			return new Result<>(-1, "创建微信支付订单失败");
+		}
 	}
 }
