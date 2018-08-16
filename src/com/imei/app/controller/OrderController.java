@@ -259,10 +259,9 @@ public class OrderController {
 	}
 
 	// 给支付宝server调用的异步通知接口，以接收订单真实支付状态
-	@RequestMapping(value = "/orderNotify/alipay", method = RequestMethod.POST, produces = {
-			"application/json; charset=utf-8" })
+	@RequestMapping(value = "/orderNotify/alipay", method = RequestMethod.POST, consumes = "application/json", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	private Result alipayNotify(HttpServletRequest request) {
+	private String alipayNotify(HttpServletRequest request) {
 		Map<String, String[]> paramMap = request.getParameterMap();
 		Map<String, String> params = new HashMap<String, String>();
 		for (Iterator<String> iter = paramMap.keySet().iterator(); iter.hasNext();) {
@@ -284,21 +283,21 @@ public class OrderController {
 				String tradeStatus = params.get("trade_status");
 				Order order = orderService.queryById(orderId);
 				if (order == null) {
-					return new Result<>(-1, "验签失败");
+					return "failed";
 				}
 				if (order.getNeedPayCount() == totalAmount && appId.equals(Constants.ALIPAY_APPID)) {
 					if (tradeStatus.equals("TRADE_SUCCESS") || tradeStatus.equals("TRADE_FINISHED")) {
 						orderService.setOrderPayed(orderId, payOrderId, 0, totalAmount);
-						return new Result<>(0, "success");
+						return "success";
 					}
 				}
 			} else {
-				return new Result<>(-1, "验签失败");
+				return "failed";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new Result<>(-1, "验签失败");
+		return "failed";
 	}
 
 	// 微信支付获取预支付信息
