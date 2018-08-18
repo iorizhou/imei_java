@@ -7,15 +7,15 @@ public class DiaryDTO {
 	private String author;
 	private Date publishTime;
 	private String authorAvatar;
-	private String coverImg;   //在首页显示时的两张封面图 以,号分隔
+	private String coverImg;   
 	private String simpleContent;
-	private String tag;  //#小标签  例如#假体隆胸  不带#号
-	private long itemId;  //对应的美容项目id 
-	private String itemName;   //美容项目名称
-	private String itemDiscount;  //美容项目的优惠价
-	private String viewCount;   //日记查看次数
-	private int commentCount;   //日记评论数
-	private long diaryTypeId;   //日记所属的日记分类id
+	private String tag;  
+	private long itemId;  
+	private String itemName;  
+	private String itemDiscount; 
+	private String viewCount;   
+	private int commentCount;  
+	private long diaryTypeId;  
 	public long getId() {
 		return id;
 	}

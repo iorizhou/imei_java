@@ -20,8 +20,12 @@
 		diary_type_id
 		FROM
 		diary
+		WHERE 
+		diary_type_id = #{typeid}
 		ORDER BY
 		publish_time DESC,view_count DESC
+		LIMIT
+		#{index},#{count}
 	</select>
 	<select id="queryById" resultType="Diary">
 		SELECT

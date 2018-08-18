@@ -60,7 +60,7 @@ public class DiaryController {
 	private Result getAllDiaryTypes() {
 		List<DiaryType> lists = diaryTypeService.queryAllDiaryTypes();
 		if (lists == null || lists.size() == 0) {
-			return new Result<ItemDTO>(0, "���������ռǷ�����Ϣ");
+			return new Result<ItemDTO>(0, "没有日记分类");
 		}
 		List<DiaryTypeDTO> datas = new ArrayList<DiaryTypeDTO>();
 		for (DiaryType type : lists) {
@@ -78,7 +78,7 @@ public class DiaryController {
 		System.out.println("typeid= " + typeid + " index = " + index + " count = " + count);
 		List<Diary> lists = diaryService.getDiaryListByType(typeid, index, count);
 		if (lists == null || lists.size() == 0) {
-			return new Result<ItemDTO>(0, "�÷��������������ռ�");
+			return new Result<ItemDTO>(0, "此分类下无日记");
 		}
 		List<DiaryDTO> datas = new ArrayList<DiaryDTO>();
 		for (Diary diary : lists) {
