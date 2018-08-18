@@ -19,6 +19,6 @@
 		WHERE
 		is_recommend = 1
 		ORDER BY
-		recommend_time DESC
+		recommend_time DESC,id DESC
 	</select>
 </mapper>
