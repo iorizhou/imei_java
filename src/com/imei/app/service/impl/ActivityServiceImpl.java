@@ -20,5 +20,10 @@ public class ActivityServiceImpl implements ActivityService {
 		// TODO Auto-generated method stub
 		return activityDao.getHomepageActivity();
 	}
-
+	@Override
+	public List<Activity> getRecommendActivity(String city) {
+		// TODO Auto-generated method stub
+		return activityDao.getRecommendActivity(city);
+	}
+	
 }

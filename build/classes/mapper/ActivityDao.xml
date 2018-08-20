@@ -13,7 +13,8 @@
 		create_time,
 		is_recommend_to_homepage,
 		begin_time,
-		end_time
+		end_time,
+		city
 		FROM
 		activity
 		WHERE
@@ -22,4 +23,25 @@
 		create_time DESC
 		LIMIT 0,8
 	</select>
+	
+	<select id="getRecommendActivity" resultType="Activity">
+		SELECT
+		id,
+		name,
+		pic_url,
+		jump_url,
+		description,
+		create_time,
+		is_recommend_to_homepage,
+		begin_time,
+		end_time,
+		city
+		FROM
+		activity
+		WHERE
+		city = #{city}
+		ORDER BY
+		id DESC
+	</select>
+	
 </mapper>

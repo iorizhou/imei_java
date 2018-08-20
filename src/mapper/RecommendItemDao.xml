@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imei.app.dao.RecommendItemDao">
+	<select id="queryListByActivityid" resultType="RecommendItem">
+		SELECT
+		id,
+		item_id,
+		recommend,
+		create_time,
+		begin_time,
+		end_time,
+		activity_id
+		FROM
+		recommend_item
+		WHERE
+		recommend = 1
+		AND
+		activity_id = #{activityid}
+		ORDER BY
+		id DESC
+		LIMIT #{index},#{count}
+	</select>
+</mapper>

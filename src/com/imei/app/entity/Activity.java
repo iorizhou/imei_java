@@ -1,18 +1,29 @@
 package com.imei.app.entity;
 
 import java.util.Date;
+import java.util.List;
+
+import com.imei.app.dto.RecommendItemDTO;
 
 public class Activity {
 	
 	private long id;
 	private String name;
 	private String description;
-	private Date createTime;
+	private String createTime;
 	private int isRecommendToHomepage;
 	private String picUrl;
 	private String jumpUrl;
-	private Date beginTime;
-	private Date endTime;
+	private String beginTime;
+	private String endTime;
+	private String city;
+	
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
 	public long getId() {
 		return id;
 	}
@@ -31,10 +42,10 @@ public class Activity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 	public int getIsRecommendToHomepage() {
@@ -55,20 +66,20 @@ public class Activity {
 	public void setJumpUrl(String jumpUrl) {
 		this.jumpUrl = jumpUrl;
 	}
-	public Date getBeginTime() {
+	public String getBeginTime() {
 		return beginTime;
 	}
-	public void setBeginTime(Date beginTime) {
+	public void setBeginTime(String beginTime) {
 		this.beginTime = beginTime;
 	}
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	public Activity(String name, String description, Date createTime, int isRecommendToHomepage, String picUrl,
-			String jumpUrl, Date beginTime, Date endTime) {
+	public Activity(String name, String description, String createTime, int isRecommendToHomepage, String picUrl,
+			String jumpUrl, String beginTime, String endTime,String city) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -78,6 +89,7 @@ public class Activity {
 		this.jumpUrl = jumpUrl;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
+		this.city = city;
 	}
 	public Activity() {
 		super();

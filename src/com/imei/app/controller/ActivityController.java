@@ -9,13 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imei.app.dto.ActivityDTO;
+import com.imei.app.dto.RecommendItemDTO;
 import com.imei.app.dto.TypeDTO;
 import com.imei.app.entity.Activity;
+import com.imei.app.entity.RecommendItem;
 import com.imei.app.entity.Type;
 import com.imei.app.service.ActivityService;
+import com.imei.app.service.ItemService;
+import com.imei.app.service.RecommendItemService;
+import com.imei.app.util.DateUtil;
 import com.imei.app.util.Result;
 
 @Controller
@@ -25,19 +31,50 @@ public class ActivityController {
 	
 	@Autowired
 	private ActivityService activityService;
-	
+	@Autowired
+	private RecommendItemService recommendItemService;
 	@RequestMapping(value ="/getHomepageActivity", method = RequestMethod.GET, produces = {
     "application/json; charset=utf-8" })
 	@ResponseBody
 	private Result getHomepageActivity() {
         List<Activity> list = activityService.getHomepageActivity();
         if (list == null || list.size() == 0) {
-            return new Result(0,"�޻����");
+            return new Result(0,"无活动信息");
         }
         List<ActivityDTO> datas = new ArrayList<ActivityDTO>();
         for(Activity activity : list) {
-        	ActivityDTO dto = new ActivityDTO(activity.getId(),activity.getName(),activity.getDescription(),activity.getCreateTime(),activity.getIsRecommendToHomepage(),activity.getPicUrl(),activity.getJumpUrl(),activity.getBeginTime(),activity.getEndTime());
+        	ActivityDTO dto = new ActivityDTO(activity.getId(),activity.getName(),activity.getDescription(),activity.getCreateTime(),activity.getIsRecommendToHomepage(),activity.getPicUrl(),activity.getJumpUrl(),activity.getBeginTime(),activity.getEndTime(),activity.getCity());
         	datas.add(dto);
+        }
+        return new Result(0,"success",datas);
+	}
+	
+	
+	@RequestMapping(value ="/getRecomendActivity", method = RequestMethod.GET, produces = {
+    "application/json; charset=utf-8" })
+	@ResponseBody
+	private Result getRecomendActivity(@RequestParam("city")String city,@RequestParam("index")int index,@RequestParam("count")int count) {
+        List<Activity> list = activityService.getRecommendActivity(city);
+        if (list == null || list.size() == 0) {
+            return new Result(0,"无活动信息");
+        }
+        List<ActivityDTO> datas = new ArrayList<ActivityDTO>();
+        for(Activity activity : list) {
+        	if (DateUtil.isNowAvailable(activity.getBeginTime(), activity.getEndTime())) {
+        		ActivityDTO dto = new ActivityDTO(activity.getId(),activity.getName(),activity.getDescription(),activity.getCreateTime(),activity.getIsRecommendToHomepage(),activity.getPicUrl(),activity.getJumpUrl(),activity.getBeginTime(),activity.getEndTime(),activity.getCity());
+            	List<RecommendItem> itemList = recommendItemService.queryListByActivityid(activity.getId(), index, count);
+            	List<RecommendItemDTO> dtoList = new ArrayList<RecommendItemDTO>();
+            	for(RecommendItem item : itemList) {
+            		RecommendItemDTO recommendItemDTO = new RecommendItemDTO(item.getId(), item.getItemId(), item.getRecommend(), item.getCreateTime(), item.getBeginTime(), item.getEndTime(), item.getActivityId());
+            		if (DateUtil.isNowAvailable(recommendItemDTO.getBeginTime(), recommendItemDTO.getEndTime())) {
+    					dtoList.add(recommendItemDTO);
+    				}
+            	}
+            	dto.setItems(dtoList);
+            	datas.add(dto);
+			}
+        	
+        	
         }
         return new Result(0,"success",datas);
 	}
