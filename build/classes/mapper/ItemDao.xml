@@ -23,7 +23,8 @@
             parent_parent_type_id,
             dj_count,
             discount_price,
-            orig_price
+            orig_price,
+            status
         FROM
             item
         WHERE

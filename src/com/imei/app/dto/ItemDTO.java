@@ -24,9 +24,30 @@ public class ItemDTO {
 	private String city;
 	private List<RelateItemDTO> relateDatas;
 	private long djCount;
+	private long discountPrice;
+	private long origPrice;
+	private long status;
 	
 	
 	
+	public long getStatus() {
+		return status;
+	}
+	public void setStatus(long status) {
+		this.status = status;
+	}
+	public long getDiscountPrice() {
+		return discountPrice;
+	}
+	public void setDiscountPrice(long discountPrice) {
+		this.discountPrice = discountPrice;
+	}
+	public long getOrigPrice() {
+		return origPrice;
+	}
+	public void setOrigPrice(long origPrice) {
+		this.origPrice = origPrice;
+	}
 	public long getDjCount() {
 		return djCount;
 	}

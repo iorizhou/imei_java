@@ -10,6 +10,42 @@ public class RecommendItemDTO {
 	private String beginTime;
 	private String endTime;
 	private long activityId;   //对应的活动ID
+	private String picUrl;
+	private long discount;
+	private long origPrice;
+	private String name;
+	
+	
+	public long getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(long activityId) {
+		this.activityId = activityId;
+	}
+	public String getPicUrl() {
+		return picUrl;
+	}
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
+	public long getDiscount() {
+		return discount;
+	}
+	public void setDiscount(long discount) {
+		this.discount = discount;
+	}
+	public long getOrigPrice() {
+		return origPrice;
+	}
+	public void setOrigPrice(long origPrice) {
+		this.origPrice = origPrice;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public long getId() {
 		return id;
 	}

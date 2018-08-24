@@ -19,9 +19,15 @@ public class Item {
 	private long origPrice;
 	private String relateItemid;   //该项目关联的兄弟项目.比如某个医院发了4个瘦脸针的项目， 2 3 4项目则是这个1项目的关联项目,APP上显示为服务规格 .id已，连接
 	private long djCount;   //该项目的订金
+	private int status;
 	
 	
-	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public long getDjCount() {
 		return djCount;
 	}

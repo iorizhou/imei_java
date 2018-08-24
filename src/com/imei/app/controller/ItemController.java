@@ -3,6 +3,7 @@ package com.imei.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,10 @@ public class ItemController {
 	private ItemService itemService;
 	@Autowired
 	private HospitalService hospitalService;
-	@RequestMapping(value ="/{id}/detail", method = RequestMethod.GET, produces = {
+	@RequestMapping(value ="/detail", method = RequestMethod.GET, produces = {
     "application/json; charset=utf-8" })
 	@ResponseBody
-    private Result<ItemDTO> detail(@PathVariable("id") Long id) {
+    private Result<ItemDTO> detail(@RequestParam("id") Long id) {
         System.out.println("detail id = "+id);
         Item item = itemService.queryById(id);
         if (item==null) {
@@ -46,6 +47,7 @@ public class ItemController {
     	dto.setDjCount(item.getDjCount());
     	dto.setDoctorId(item.getDoctorId());
     	dto.setDoctorName(item.getDoctorName());
+    	dto.setHospitalId(item.getHospitalId());
     	if (dto.getHospitalId()!=0) {
 			Hospital hospital = hospitalService.queryById(dto.getHospitalId());
 			if (hospital!=null) {
@@ -66,6 +68,9 @@ public class ItemController {
 //    	dto.setRelateDatas(item.getre);
     	dto.setSortOrder(item.getSortOrder());
     	dto.setTypeId(item.getTypeId());
+    	dto.setStatus(item.getStatus());
+    	dto.setDiscountPrice(item.getDiscountPrice());
+    	dto.setOrigPrice(item.getOrigPrice());
         return new Result<ItemDTO>(0,"success",dto);
     }
 	
@@ -87,6 +92,9 @@ public class ItemController {
         	dto.setDjCount(item.getDjCount());
         	dto.setDoctorId(item.getDoctorId());
         	dto.setDoctorName(item.getDoctorName());
+        	dto.setDiscountPrice(item.getDiscountPrice());
+        	dto.setOrigPrice(item.getOrigPrice());
+        	dto.setHospitalId(item.getHospitalId());
         	if (dto.getHospitalId()!=0) {
     			Hospital hospital = hospitalService.queryById(dto.getHospitalId());
     			if (hospital!=null) {
@@ -107,54 +115,11 @@ public class ItemController {
 //        	dto.setRelateDatas(item.getre);
         	dto.setSortOrder(item.getSortOrder());
         	dto.setTypeId(item.getTypeId());
+        	dto.setDiscountPrice(item.getDiscountPrice());
+        	dto.setOrigPrice(item.getOrigPrice());
+        	dto.setStatus(item.getStatus());
         	datas.add(dto);
         }
         return new Result<List<ItemDTO>>(0,"success",datas);
-    }
-	
-	@RequestMapping(value ="/detail", method = RequestMethod.GET, produces = {
-    "application/json; charset=utf-8" })
-	@ResponseBody
-    private Result detail(@RequestParam("id")long id) {
-        Item item = itemService.queryById(id);
-        if (item == null) {
-			return new Result(-1,"项目不存在");
-		}
-        ItemDTO dto = new ItemDTO();
-    	dto.setCity(item.getCity());
-    	dto.setCover(item.getCover());
-    	dto.setDetailsUrl(item.getDetailsUrl());
-    	dto.setDjCount(item.getDjCount());
-    	dto.setDoctorId(item.getDoctorId());
-    	dto.setDoctorName(item.getDoctorName());
-    	if (dto.getHospitalId()!=0) {
-			Hospital hospital = hospitalService.queryById(dto.getHospitalId());
-			if (hospital!=null) {
-				dto.setHospitalAddr(hospital.getAddr());
-				dto.setHospitalCover(hospital.getAvatar());
-				dto.setHospitalGps(hospital.getGps());
-				dto.setHospitalName(hospital.getName());
-				dto.setHospitalWebsite(hospital.getWebsite());
-			}
-		}
-    	dto.setHospitalId(item.getHospitalId());
-    	dto.setId(item.getId());
-    	dto.setJumpType(item.getJumpType());
-    	dto.setJumpUrl(item.getJumpUrl());
-    	dto.setName(item.getName());
-    	dto.setParentParentTypeId(item.getParentParentTypeId());
-    	dto.setParentTypeId(item.getParentTypeId());
-//    	dto.setRelateDatas(item.getre);
-    	dto.setSortOrder(item.getSortOrder());
-    	dto.setTypeId(item.getTypeId());
-//        if (item.getRelateItemid()!=null) {
-//			String[] relateList = item.getRelateItemid().split(",");
-//			if (relateList.length>0) {
-//				for(String relateId:relateList) {
-//					Item item 
-//				}
-//			}
-//		}
-        return new Result(0,"success",dto);
     }
 }

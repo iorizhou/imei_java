@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imei.app.dto.ActivityDTO;
 import com.imei.app.dto.RecommendItemDTO;
-import com.imei.app.dto.TypeDTO;
 import com.imei.app.entity.Activity;
+import com.imei.app.entity.Item;
 import com.imei.app.entity.RecommendItem;
-import com.imei.app.entity.Type;
 import com.imei.app.service.ActivityService;
 import com.imei.app.service.ItemService;
 import com.imei.app.service.RecommendItemService;
@@ -33,6 +32,8 @@ public class ActivityController {
 	private ActivityService activityService;
 	@Autowired
 	private RecommendItemService recommendItemService;
+	@Autowired
+	private ItemService itemService;
 	@RequestMapping(value ="/getHomepageActivity", method = RequestMethod.GET, produces = {
     "application/json; charset=utf-8" })
 	@ResponseBody
@@ -66,6 +67,13 @@ public class ActivityController {
             	List<RecommendItemDTO> dtoList = new ArrayList<RecommendItemDTO>();
             	for(RecommendItem item : itemList) {
             		RecommendItemDTO recommendItemDTO = new RecommendItemDTO(item.getId(), item.getItemId(), item.getRecommend(), item.getCreateTime(), item.getBeginTime(), item.getEndTime(), item.getActivityId());
+            		Item itemEntity = itemService.queryById(item.getItemId());
+            		if (itemEntity!=null) {
+						recommendItemDTO.setName(itemEntity.getName());
+						recommendItemDTO.setDiscount(itemEntity.getDiscountPrice());
+						recommendItemDTO.setOrigPrice(itemEntity.getOrigPrice());
+						recommendItemDTO.setPicUrl(itemEntity.getCover());
+					}
             		if (DateUtil.isNowAvailable(recommendItemDTO.getBeginTime(), recommendItemDTO.getEndTime())) {
     					dtoList.add(recommendItemDTO);
     				}
