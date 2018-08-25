@@ -31,13 +31,13 @@ public class UserController {
 	private Result reg(@RequestParam("phoneNum")String phoneNum,@RequestParam("pwd")String pwd,@RequestParam("city")String city) {
 		int count = userService.checkPhonenumReg(phoneNum);
 		if (count>0) {
-			return new Result<>(-1, "×¢²áÊ§°Ü,¸ÃÊÖ»úºÅÒÑ´æÔÚ");
+			return new Result<>(-1, "è¯¥æ‰‹æœºå·å·²è¢«æ³¨å†Œï¼Œæ³¨å†Œå¤±è´¥");
 		}
-		long id = userService.regUser(phoneNum, MD5Util.md5(pwd), "iÃÀer_"+System.currentTimeMillis()+new Random().nextInt(100), new Date(), city);
+		long id = userService.regUser(phoneNum, MD5Util.md5(pwd), "iç¾er_"+System.currentTimeMillis()+new Random().nextInt(100), new Date(), city);
 		User user =userService.findUser(id);
 		System.out.println("userid = "+user.getId());
 		if (user==null) {
-			return new Result<>(-1, "×¢²áÊ§°Ü");
+			return new Result<>(-1, "æ³¨å†Œå¤±è´¥ï¼Œè¯·ç¨å€™é‡è¯•");
 		}
 		UserDTO userDTO = new UserDTO(user.getPhoneNum(), TokenUtil.getInstance().genToken(user.getPhoneNum(), user.getId()), user.getNickName(), user.getRegDate(), user.getCity());
         return new Result(0,"success",userDTO);
@@ -49,7 +49,7 @@ public class UserController {
 	private Result login(@RequestParam("phoneNum")String phoneNum,@RequestParam("pwd")String pwd) {
 		User user = userService.login(phoneNum, MD5Util.md5(pwd));
 		if (user==null) {
-			return new Result<>(-1, "µÇÂ¼Ê§°Ü£¬Çë¼ì²éÄúµÄÕÊºÅÃÜÂë");
+			return new Result<>(-1, "ç™»å½•å¤±è´¥ï¼Œå¸å·æˆ–å¯†ç é”™è¯¯");
 		}
 		UserDTO userDTO = new UserDTO(user.getPhoneNum(), TokenUtil.getInstance().genToken(user.getPhoneNum(), user.getId()), user.getNickName(), user.getRegDate(), user.getCity());
         return new Result(0,"success",userDTO);
@@ -62,14 +62,14 @@ public class UserController {
 		System.out.println("city = "+city);
 		User user = userService.findUser(id);
 		if (user==null) {
-			return new Result<>(-1, "ĞŞ¸ÄÊ§°Ü£¬¸ÃÓÃ»§²»´æÔÚ");
+			return new Result<>(-1, "æ›´æ–°ç”¨æˆ·ä¿¡æ¯å¤±è´¥ï¼Œç”¨æˆ·ä¸å­˜åœ¨");
 		}
 		user.setCity(city);
 		int count = userService.updateUserInfo(user);
 		
 		if (count<=0) {
-			return new Result<>(-1, "ĞŞ¸ÄÊ§°Ü£¬ÇëÉÔºòÖØÊÔ");
+			return new Result<>(-1, "æ›´æ–°ç”¨æˆ·ä¿¡æ¯å¤±è´¥,è¯·ç¨å€™é‡è¯•");
 		}
-        return new Result(0,"¸öÈËĞÅÏ¢ĞŞ¸Ä³É¹¦");
+        return new Result(0,"ç”¨æˆ·ä¿¡æ¯æ›´æ–°æˆåŠŸ");
 	}
 }
