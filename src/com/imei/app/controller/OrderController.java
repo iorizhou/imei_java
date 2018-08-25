@@ -72,7 +72,7 @@ public class OrderController {
 	private Result create(@Param("itemId") long itemId, @Param("userId") long userId,
 			@Param("phoneNum") String phoneNum, @Param("message") String message, @Param("buyCount") int buyCount,
 			@Param("djRedPacketId") long djRedPacketId, @Param("wkRedPacketId") long wkRedPacketId,
-			@Param("yyRedPacketId") long yyRedPacketId, @Param("payChannel") int payChannel) {
+			@Param("yyRedPacketId") long yyRedPacketId) {
 //		int orderId = orderService.create(order)
 		Item item = itemService.queryById(itemId);
 		if (item == null) {
@@ -112,7 +112,7 @@ public class OrderController {
 		long wkCount = totalPrice - totalDj - wkYouhui - yyPacket;
 		long needPayCount = totalDj - djDiscount;
 		Order order = new Order(item.getName(), itemId, phoneNum, message, totalPrice, buyCount, djRedPacketId,
-				wkRedPacketId, yyRedPacketId, totalDj, djDiscount, wkCount, 0, "", payChannel, 0,
+				wkRedPacketId, yyRedPacketId, totalDj, djDiscount, wkCount, 0, "", 0, 0,
 				DateUtil.getDateAfter(30 * 60 * 1000), 0, "", userId, 0, needPayCount, DateUtil.getNowStr());
 		int orderId = orderService.create(order);
 		if (orderId <= 0) {
