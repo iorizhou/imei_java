@@ -64,8 +64,8 @@ public class RedPacketController {
 	@RequestMapping(value = "/getWKRedPacketList", method = RequestMethod.GET, produces = {
 			"application/json; charset=utf-8" })
 	@ResponseBody
-	private Result getWKRedPacketList(@Param("userId") long userId) {
-		List<WKRedPacket> list = wkRedPacketService.queryListByUserId(userId, 0);
+	private Result getWKRedPacketList(@Param("userId") long userId,@Param("status") int status) {
+		List<WKRedPacket> list = wkRedPacketService.queryListByUserId(userId, status);
 		if (list == null || list.size() == 0) {
 			return new Result(-1, "该用户无可用尾款红包");
 		}
@@ -85,8 +85,8 @@ public class RedPacketController {
 	@RequestMapping(value = "/getYYRedPacketList", method = RequestMethod.GET, produces = {
 			"application/json; charset=utf-8" })
 	@ResponseBody
-	private Result getYYRedPacketList(@Param("userId") long userId) {
-		List<YYRedPacket> list = yyRedPacketService.queryListByUserId(userId, 0);
+	private Result getYYRedPacketList(@Param("userId") long userId,@Param("status")int status,@Param("hospitalId") long hospitalId) {
+		List<YYRedPacket> list = yyRedPacketService.queryListByUserId(userId, status,hospitalId);
 		if (list == null || list.size() == 0) {
 			return new Result(-1, "该用户无可用医院红包");
 		}

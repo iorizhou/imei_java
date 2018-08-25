@@ -10,6 +10,6 @@ import com.imei.app.entity.YYRedPacket;
 public interface YYRedPacketService {
 	int save(YYRedPacket packet);
 	int use(long id,int status);
-	List<YYRedPacket> queryListByUserId(long userId,int status);
+	List<YYRedPacket> queryListByUserId(long userId,int status,long hospitalId);
 	YYRedPacket queryById(long id,long userId);
 }

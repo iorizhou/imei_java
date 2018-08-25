@@ -8,7 +8,7 @@
 </insert>
 
 
-<select id="queryListByUserId" resultType="WKRedPacket">
+<select id="queryListByUserId" resultType="YYRedPacket">
 		SELECT
 		id,
 		name,
@@ -27,8 +27,10 @@
 		user_id = #{user_id}
 		AND
 		status = #{status}
+		AND
+		hospital_id = #{hospital_id}
 		ORDER BY
-		end_date DESC,amount DESC
+		amount DESC,end_date DESC
 	</select>
 	<select id="queryById" resultType="YYRedPacket">
 		SELECT

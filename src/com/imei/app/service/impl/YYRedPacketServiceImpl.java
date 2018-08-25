@@ -28,9 +28,9 @@ public class YYRedPacketServiceImpl implements YYRedPacketService {
 	}
 
 	@Override
-	public List<YYRedPacket> queryListByUserId(long userId, int status) {
+	public List<YYRedPacket> queryListByUserId(long userId, int status,long hospitalId) {
 		// TODO Auto-generated method stub
-		return dao.queryListByUserId(userId, status);
+		return dao.queryListByUserId(userId, status,hospitalId);
 	}
 
 	@Override
