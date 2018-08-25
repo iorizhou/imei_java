@@ -114,11 +114,11 @@ public class OrderController {
 		Order order = new Order(item.getName(), itemId, phoneNum, message, totalPrice, buyCount, djRedPacketId,
 				wkRedPacketId, yyRedPacketId, totalDj, djDiscount, wkCount, 0, "", 0, 0,
 				DateUtil.getDateAfter(30 * 60 * 1000), 0, "", userId, 0, needPayCount, DateUtil.getNowStr());
-		int orderId = orderService.create(order);
-		if (orderId <= 0) {
+		int count = orderService.create(order);
+		if (count <= 0) {
 			return new Result(-1, "订单创建失败，请稍候重试");
 		}
-		return new Result(0, "success", orderId);
+		return new Result(0, "success", order.getId());
 	}
 
 	@RequestMapping(value = "/detail", method = RequestMethod.GET, produces = { "application/json; charset=utf-8" })
