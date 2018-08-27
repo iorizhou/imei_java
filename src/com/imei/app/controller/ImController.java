@@ -18,9 +18,12 @@ import com.imei.app.dto.ItemDTO;
 import com.imei.app.dto.MessageDTO;
 import com.imei.app.dto.MessageListDTO;
 import com.imei.app.entity.Message;
+import com.imei.app.entity.PushToken;
 import com.imei.app.entity.User;
 import com.imei.app.service.MessageService;
+import com.imei.app.service.PushTokenService;
 import com.imei.app.service.UserService;
+import com.imei.app.util.DateUtil;
 import com.imei.app.util.Result;
 
 @Controller
@@ -30,7 +33,8 @@ public class ImController {
 	UserService userService;
 	@Autowired
 	MessageService messageService;
-	
+	@Autowired
+	PushTokenService pushTokenService;
 	@RequestMapping(value ="/getUnreadMsg", method = RequestMethod.GET, produces = {
     "application/json; charset=utf-8" })
 	@ResponseBody
@@ -78,5 +82,51 @@ public class ImController {
 			messageService.updateMessageReadStatus(Long.parseLong(id),1);
 		}
 		return new Result<>(0, "success");
+	}
+	
+	@RequestMapping(value ="/sendSingle", method = RequestMethod.GET, produces = {
+    "application/json; charset=utf-8" })
+	@ResponseBody
+	private Result sendMsg(@Param("content")String content,@Param("userId")long userId,@Param("recvId")long recvId) {
+		if (content==null||content.trim().equals("")) {
+			return new Result<>(-1, "消息内容不能为空");
+		}
+		if (userId<=0||recvId<=0) {
+			return new Result<>(-1, "消息发送及接收方ID非法");
+		}
+		Message message = new Message();
+		message.setContent(content);
+		message.setRecverId(recvId);
+		message.setSenderId(userId);
+		message.setSendTime(DateUtil.getNowStr());
+		message.setStatus(0);
+		int count = messageService.save(message);
+		if (count<=0) {
+			return new Result<>(-1, "消息发送失败，请稍候重试");
+		
+		}
+		return new Result<>(0, "消息发送成功",message.getId());
+	}
+	
+	
+	
+	//注册腾讯信鸽推送SDK的TOKEN
+	@RequestMapping(value ="/regToken", method = RequestMethod.GET, produces = {
+    "application/json; charset=utf-8" })
+	@ResponseBody
+	private Result regToken(@Param("userId")long userId,@Param("token")String token) {
+		if (userId<=0||token==null||token.trim().equals("")) {
+			return new Result<>(-1, "push token注册失败，参数非法");
+		}
+		//不管那么多，先删除再说，避免重复注册
+		pushTokenService.deleteByUserId(userId);
+		PushToken entity = new PushToken();
+		entity.setUserId(userId);
+		entity.setPushToken(token);
+		int count = pushTokenService.save(entity);
+		if (count<=0) {
+			return new Result<>(-1, "push token注册失败");
+		}
+		return new Result<>(0, "push token注册成功",entity.getId());
 	}
 }

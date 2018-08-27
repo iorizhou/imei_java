@@ -25,6 +25,12 @@ public class MessageServiceImpl implements MessageService {
 		// TODO Auto-generated method stub
 		return messageDao.updateMessageReadStatus(msgId,status);
 	}
+
+	@Override
+	public int save(Message msg) {
+		// TODO Auto-generated method stub
+		return messageDao.save(msg);
+	}
 	
 	
 }

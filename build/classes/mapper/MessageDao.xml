@@ -24,4 +24,10 @@
  </trim>
  WHERE id=#{msg_id}
 </update>
+
+
+
+<insert id="save" parameterType="Message" useGeneratedKeys="true" keyProperty="id">
+  insert into message(content, send_time,sender_id,recver_id,status) values(#{content}, #{sendTime}, #{senderId}, #{recverId}, #{status});
+</insert>
 </mapper>
