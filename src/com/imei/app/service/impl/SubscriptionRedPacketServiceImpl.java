@@ -21,11 +21,7 @@ public class SubscriptionRedPacketServiceImpl implements SubscriptionRedPacketSe
 		return dao.save(packet);
 	}
 
-	@Override
-	public int use(long id,int status) {
-		// TODO Auto-generated method stub
-		return dao.use(id,status);
-	}
+	
 
 	@Override
 	public List<SubscriptionRedPacket> queryListByUserId(long userId,int status) {
@@ -37,6 +33,12 @@ public class SubscriptionRedPacketServiceImpl implements SubscriptionRedPacketSe
 	public SubscriptionRedPacket queryById(long id,long userId) {
 		// TODO Auto-generated method stub
 		return dao.queryById(id,userId);
+	}
+
+	@Override
+	public int use(long id, long orderId,String useDate) {
+		// TODO Auto-generated method stub
+		return dao.use(id, orderId,useDate);
 	}
 	
 	

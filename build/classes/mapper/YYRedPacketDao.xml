@@ -58,9 +58,10 @@
 	
 	<update id="use"  parameterType="java.lang.Integer">
  UPDATE yy_red_packet
- <trim prefix="set" suffixOverrides=",">
-  <if test="status!=null">status=#{status},</if>
- </trim>
+ set
+  status=1,
+   order_id = #{order_id},
+   use_date = #{use_date}
  WHERE id=#{id}
 </update>
 	

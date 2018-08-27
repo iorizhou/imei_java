@@ -8,7 +8,7 @@ import com.imei.app.entity.SubscriptionRedPacket;
 
 public interface SubscriptionRedPacketService {
 	int save(SubscriptionRedPacket packet);
-	int use(long id,int status);
 	List<SubscriptionRedPacket> queryListByUserId(long userId,int status);
 	SubscriptionRedPacket queryById(long id,long userId);
+	int use(long id,long orderId,String useDate);
 }

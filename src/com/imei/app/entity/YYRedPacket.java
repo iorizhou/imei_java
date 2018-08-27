@@ -13,8 +13,21 @@ public class YYRedPacket {
 	private long amount;  //红包金额
 	private long conditionAmount;   //使用基线。  满xx才可使用
 	private int status;  //状态  0未使用 1已使用 2已过期
+	private String useDate;  //使用时间(若该红包已被使用)
+	private long userOrderId; //使用在哪个订单上
 	
-	
+	public String getUseDate() {
+		return useDate;
+	}
+	public void setUseDate(String useDate) {
+		this.useDate = useDate;
+	}
+	public long getUserOrderId() {
+		return userOrderId;
+	}
+	public void setUserOrderId(long userOrderId) {
+		this.userOrderId = userOrderId;
+	}
 	public long getHospitalId() {
 		return hospitalId;
 	}

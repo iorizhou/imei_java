@@ -52,11 +52,12 @@
 		end_date DESC,amount DESC
 	</select>
 	
-	<update id="use"  parameterType="java.lang.Integer">
+	<update id="use" >
  UPDATE subscription_red_package
- <trim prefix="set" suffixOverrides=",">
-  <if test="status!=null">status=#{status},</if>
- </trim>
+ set
+  status=1,
+   order_id = #{order_id},
+   use_date = #{use_date}
  WHERE id=#{id}
 </update>
 	

@@ -79,6 +79,7 @@ public class OrderController {
 		if (item == null) {
 			return new Result(-1, "项目id错误 项目不存在");
 		}
+		String now = DateUtil.getNowStr();
 		// 计算总价
 		long totalPrice = item.getDiscountPrice() * buyCount;
 		// 计算订金总价
@@ -114,10 +115,22 @@ public class OrderController {
 		long needPayCount = totalDj - djDiscount;
 		Order order = new Order(item.getName(), itemId, phoneNum, message, totalPrice, buyCount, djRedPacketId,
 				wkRedPacketId, yyRedPacketId, totalDj, djDiscount, wkCount, 0, "", 0, 0,
-				DateUtil.getDateAfter(30 * 60 * 1000), 0, "", userId, 0, needPayCount, DateUtil.getNowStr());
+				DateUtil.getDateAfter(30 * 60 * 1000), 0, "", userId, 0, needPayCount, now);
 		int count = orderService.create(order);
 		if (count <= 0) {
 			return new Result(-1, "订单创建失败，请稍候重试");
+		}
+		//订单创建成功，则需要使用掉对应的红包
+		//订金红包
+		
+		if (djPacket!=null) {
+			djService.use(djPacket.getId(), order.getId(), now);
+		}
+		if (yyRedPacket!=null) {
+			yyService.use(yyRedPacket.getId(), order.getId(), now);
+		}
+		if (wkRedPacket!=null) {
+			wkService.use(wkRedPacket.getId(), order.getId(), now);
 		}
 		return new Result(0, "success", order.getId());
 	}

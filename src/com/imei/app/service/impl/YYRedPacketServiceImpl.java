@@ -22,9 +22,9 @@ public class YYRedPacketServiceImpl implements YYRedPacketService {
 	}
 
 	@Override
-	public int use(long id, int status) {
+	public int use(long id,long orderId,String useDate) {
 		// TODO Auto-generated method stub
-		return dao.use(id, status);
+		return dao.use(id, orderId,useDate);
 	}
 
 	@Override
