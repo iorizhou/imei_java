@@ -27,9 +27,15 @@ public class Order {
 	private long userId;
 	private long consumeUserId;   //进行订单核销的医院操作人员ID。 
 	private String createDate;  //订单创建时间
+	private String payDate;   //支付时间
 	
 	
-	
+	public String getPayDate() {
+		return payDate;
+	}
+	public void setPayDate(String payDate) {
+		this.payDate = payDate;
+	}
 	public String getCreateDate() {
 		return createDate;
 	}

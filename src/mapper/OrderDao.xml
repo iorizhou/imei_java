@@ -35,7 +35,8 @@
 		consume_code,
 		user_id,
 		consume_user_id,
-		create_date
+		create_date,
+		pay_date
 		FROM
 		orderinfo
 		WHERE
@@ -69,7 +70,8 @@
 		consume_code,
 		user_id,
 		consume_user_id,
-		create_date
+		create_date,
+		pay_date
 		FROM
 		orderinfo
 		WHERE
@@ -101,7 +103,8 @@
 		consume_code,
 		user_id,
 		consume_user_id,
-		create_date
+		create_date,
+		pay_date
 		FROM
 		orderinfo
 		WHERE
@@ -132,7 +135,8 @@
 		consume_code,
 		user_id,
 		consume_user_id,
-		create_date
+		create_date,
+		pay_date
 		FROM
 		orderinfo
 		WHERE

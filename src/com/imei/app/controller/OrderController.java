@@ -164,6 +164,8 @@ public class OrderController {
 		dto.setPhoneNum(order.getPhoneNum());
 		dto.setTotalPrice(order.getTotalPrice());
 		dto.setUserId(order.getUserId());
+		dto.setPayDate(order.getPayDate());
+
 		dto.setWkCount(order.getWkCount());
 		dto.setWkRedPacketId(order.getWkRedPacketId());
 		dto.setYyRedPacketId(order.getYyRedPacketId());
@@ -223,6 +225,7 @@ public class OrderController {
 			dto.setTotalPrice(order.getTotalPrice());
 			dto.setUserId(order.getUserId());
 			dto.setWkCount(order.getWkCount());
+			dto.setPayDate(order.getPayDate());
 			dto.setWkRedPacketId(order.getWkRedPacketId());
 			dto.setYyRedPacketId(order.getYyRedPacketId());
 			Item item = itemService.queryById(order.getItemId());
@@ -267,6 +270,8 @@ public class OrderController {
 		dto.setPayStatus(order.getPayStatus());
 		dto.setPhoneNum(order.getPhoneNum());
 		dto.setTotalPrice(order.getTotalPrice());
+		dto.setPayDate(order.getPayDate());
+
 		dto.setUserId(order.getUserId());
 		dto.setWkCount(order.getWkCount());
 		dto.setWkRedPacketId(order.getWkRedPacketId());
