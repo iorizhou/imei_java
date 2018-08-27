@@ -52,7 +52,7 @@
 	</select>
 	
 	
-	<update id="use"  parameterType="java.lang.Integer">
+	<update id="use" >
  UPDATE wk_red_packet
  set
   status=1,

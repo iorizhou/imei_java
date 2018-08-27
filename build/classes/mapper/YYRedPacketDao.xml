@@ -56,7 +56,7 @@
 	</select>
 	
 	
-	<update id="use"  parameterType="java.lang.Integer">
+	<update id="use" >
  UPDATE yy_red_packet
  set
   status=1,
