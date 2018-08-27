@@ -194,7 +194,7 @@ public class OrderController {
 		}
 		List<OrderDTO> datas = new ArrayList<>();
 		for (Order order : list) {
-			if (order.getOrderStatus()==0 ) {
+			if (status==0) {
 				//状态为0，说明是未支付的订单，则需要再次过滤一下是否时间失效
 				if (!DateUtil.isNowAvailable(order.getCreateDate(), order.getOrderInvalidTime())) {
 					continue;

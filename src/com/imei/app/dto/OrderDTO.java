@@ -31,9 +31,15 @@ public class OrderDTO {
 	private String hospitalName;
 	private String hospitalAddr;
 	private String consumeDate;  //如果完成支付了，到医院核销使用的日期
-
+	private String payDate;   //支付时间
 	
 	
+	public String getPayDate() {
+		return payDate;
+	}
+	public void setPayDate(String payDate) {
+		this.payDate = payDate;
+	}
 	public String getConsumeDate() {
 		return consumeDate;
 	}
