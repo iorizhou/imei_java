@@ -29,6 +29,7 @@ import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.imei.app.dto.OrderDTO;
+import com.imei.app.entity.Hospital;
 import com.imei.app.entity.Item;
 import com.imei.app.entity.Order;
 import com.imei.app.entity.SubscriptionRedPacket;
@@ -153,6 +154,15 @@ public class OrderController {
 		dto.setWkCount(order.getWkCount());
 		dto.setWkRedPacketId(order.getWkRedPacketId());
 		dto.setYyRedPacketId(order.getYyRedPacketId());
+		Item item = itemService.queryById(order.getItemId());
+		if (item!=null) {
+			dto.setHospitalId(item.getHospitalId());
+			Hospital hospital = hospitalService.queryById(item.getHospitalId());
+			if (hospital!=null) {
+				dto.setHospitalAddr(hospital.getAddr());
+				dto.setHospitalName(hospital.getName());
+			}
+		}
 		return new Result(0, "success", dto);
 	}
 
@@ -202,6 +212,15 @@ public class OrderController {
 			dto.setWkCount(order.getWkCount());
 			dto.setWkRedPacketId(order.getWkRedPacketId());
 			dto.setYyRedPacketId(order.getYyRedPacketId());
+			Item item = itemService.queryById(order.getItemId());
+			if (item!=null) {
+				dto.setHospitalId(item.getHospitalId());
+				Hospital hospital = hospitalService.queryById(item.getHospitalId());
+				if (hospital!=null) {
+					dto.setHospitalAddr(hospital.getAddr());
+					dto.setHospitalName(hospital.getName());
+				}
+			}
 			datas.add(dto);
 		}
 		return new Result(0, "success", datas);
@@ -215,15 +234,39 @@ public class OrderController {
 			return new Result(-1, "订单不存在");
 		}
 		OrderDTO dto = new OrderDTO();
+		dto.setBuyCount(order.getBuyCount());
+		dto.setConsumeCode(order.getConsumeCode());
+		dto.setConsumeUserId(order.getConsumeUserId());
+		dto.setCreateDate(order.getCreateDate());
+		dto.setDjDiscount(order.getDjDiscount());
+		dto.setDjRedPacketId(order.getDjRedPacketId());
+		dto.setDjTotalCount(order.getDjTotalCount());
 		dto.setId(order.getId());
+		dto.setItemId(order.getItemId());
+		dto.setItemName(order.getItemName());
+		dto.setMessage(order.getMessage());
+		dto.setNeedPayCount(order.getNeedPayCount());
+		dto.setOrderInvalidTime(order.getOrderInvalidTime());
 		dto.setOrderStatus(order.getOrderStatus());
 		dto.setPayChannel(order.getPayChannel());
-		dto.setPayStatus(order.getPayStatus());
-		dto.setNeedPayCount(order.getNeedPayCount());
 		dto.setPayedCount(order.getPayedCount());
+		dto.setPayOrderId(order.getPayOrderId());
+		dto.setPayStatus(order.getPayStatus());
+		dto.setPhoneNum(order.getPhoneNum());
+		dto.setTotalPrice(order.getTotalPrice());
 		dto.setUserId(order.getUserId());
-		dto.setOrderInvalidTime(order.getOrderInvalidTime());
-		dto.setCreateDate(order.getCreateDate());
+		dto.setWkCount(order.getWkCount());
+		dto.setWkRedPacketId(order.getWkRedPacketId());
+		dto.setYyRedPacketId(order.getYyRedPacketId());
+		Item item = itemService.queryById(order.getItemId());
+		if (item!=null) {
+			dto.setHospitalId(item.getHospitalId());
+			Hospital hospital = hospitalService.queryById(item.getHospitalId());
+			if (hospital!=null) {
+				dto.setHospitalAddr(hospital.getAddr());
+				dto.setHospitalName(hospital.getName());
+			}
+		}
 		return new Result(0, "success", dto);
 	}
 
