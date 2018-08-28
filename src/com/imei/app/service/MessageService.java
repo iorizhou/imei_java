@@ -8,7 +8,7 @@ import com.imei.app.entity.Message;
 
 public interface MessageService {
 	int save(Message msg);
-
+	int delete(long id);
 	List<Message> queryUnreadList(long recverId);
 	int updateMessageReadStatus(long msgId,int status);
 }

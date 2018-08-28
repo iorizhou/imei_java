@@ -31,6 +31,12 @@ public class MessageServiceImpl implements MessageService {
 		// TODO Auto-generated method stub
 		return messageDao.save(msg);
 	}
+
+	@Override
+	public int delete(long id) {
+		// TODO Auto-generated method stub
+		return messageDao.delete(id);
+	}
 	
 	
 }

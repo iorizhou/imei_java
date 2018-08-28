@@ -8,6 +8,7 @@ import com.imei.app.entity.Message;
 
 public interface MessageDao {
 	int save(Message msg);
+	int delete(@Param("id")long id);
 	List<Message> queryUnreadList(@Param("recver_id")long recverId);
 	int updateMessageReadStatus(@Param("msg_id")long msgId,@Param("status")int status);
 }
