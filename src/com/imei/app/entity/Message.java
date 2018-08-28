@@ -9,7 +9,30 @@ public class Message {
 	private long senderId;
 	private long recverId;
 	private int status;   //阅读状态 是否已读。0为未读，1为已读
+	private String senderName;
+	private String recverName;  
+	private int messageType;   //消息类型 0为文本，1为图片，2为音频，3为视频
 	
+	
+	
+	public int getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(int messageType) {
+		this.messageType = messageType;
+	}
+	public String getSenderName() {
+		return senderName;
+	}
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
+	}
+	public String getRecverName() {
+		return recverName;
+	}
+	public void setRecverName(String recverName) {
+		this.recverName = recverName;
+	}
 	public long getId() {
 		return id;
 	}

@@ -4,8 +4,20 @@ public class PushToken {
 	private long id;
 	private long userId;
 	private String pushToken;
+	private int deviceType;   //设备类型  0为安卓 ，1为IOS，2为网页
 	
 	
+	
+	public int getDeviceType() {
+		return deviceType;
+	}
+
+
+	public void setDeviceType(int deviceType) {
+		this.deviceType = deviceType;
+	}
+
+
 	public long getId() {
 		return id;
 	}

@@ -10,7 +10,10 @@
 		send_time,
 		sender_id,
 		recver_id,
-		status
+		status,
+		sender_name,
+		recver_name,
+		message_type
 		FROM
 		message
 		WHERE
@@ -28,6 +31,6 @@
 
 
 <insert id="save" parameterType="Message" useGeneratedKeys="true" keyProperty="id">
-  insert into message(content, send_time,sender_id,recver_id,status) values(#{content}, #{sendTime}, #{senderId}, #{recverId}, #{status});
+  insert into message(content, send_time,sender_id,recver_id,status,sender_name,recver_name,message_type) values(#{content}, #{sendTime}, #{senderId}, #{recverId}, #{status}, #{senderName}, #{recverName}, #{messageType});
 </insert>
 </mapper>

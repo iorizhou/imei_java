@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.ibatis.annotations.Param;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import com.imei.app.service.MessageService;
 import com.imei.app.service.PushTokenService;
 import com.imei.app.service.UserService;
 import com.imei.app.util.DateUtil;
+import com.imei.app.util.MessagePushUtil;
 import com.imei.app.util.Result;
 
 @Controller
@@ -49,11 +51,17 @@ public class ImController {
 			if (!map.containsKey(message.getSenderId())) {
 				List<MessageDTO> list = new ArrayList<MessageDTO>();
 				MessageDTO dto = new MessageDTO(message.getId(), message.getContent(), message.getSendTime(), message.getSenderId(), message.getRecverId());
+				dto.setStatus(message.getStatus());
+				dto.setSenderName(message.getSenderName());
+				dto.setRecverName(message.getRecverName());
 				list.add(dto);
 				map.put(message.getSenderId(), list);
 			}else {
 				List<MessageDTO> list = map.get(message.getSenderId());
 				MessageDTO dto = new MessageDTO(message.getId(), message.getContent(), message.getSendTime(), message.getSenderId(), message.getRecverId());
+				dto.setStatus(message.getStatus());
+				dto.setSenderName(message.getSenderName());
+				dto.setRecverName(message.getRecverName());
 				list.add(dto);
 				map.put(message.getSenderId(), list);
 			}
@@ -84,28 +92,48 @@ public class ImController {
 		return new Result<>(0, "success");
 	}
 	
+	
 	@RequestMapping(value ="/sendSingle", method = RequestMethod.GET, produces = {
     "application/json; charset=utf-8" })
 	@ResponseBody
-	private Result sendMsg(@Param("content")String content,@Param("userId")long userId,@Param("recvId")long recvId) {
+	private Result sendSingle(@Param("content")String content,@Param("userId")long userId,@Param("recvId")long recvId,@Param("messageType")int messageType) {
+		//消息类型 0为文本，1为图片，2为音频，3为视频
 		if (content==null||content.trim().equals("")) {
 			return new Result<>(-1, "消息内容不能为空");
 		}
 		if (userId<=0||recvId<=0) {
 			return new Result<>(-1, "消息发送及接收方ID非法");
 		}
+		User sender = userService.findUser(userId);
+		if (sender==null) {
+			return new Result<>(-1, "senderid非法");
+		}
+		User recver = userService.findUser(recvId);
+		if (recver==null) {
+			return new Result<>(-1, "recvId非法");
+		}
 		Message message = new Message();
 		message.setContent(content);
+		message.setSenderName(sender.getNickName());
+		message.setRecverName(sender.getNickName());
 		message.setRecverId(recvId);
 		message.setSenderId(userId);
 		message.setSendTime(DateUtil.getNowStr());
 		message.setStatus(0);
+		message.setMessageType(messageType);
+		PushToken pushToken = pushTokenService.queryByUserId(recvId);
+		//推消息
+		JSONObject jsonObject = MessagePushUtil.getInstance().pushSingleMessage(message, pushToken);
+		if (jsonObject.getInt("ret_code")!=0) {
+			//失败了 
+			return new Result<>(-1, "消息发送失败，请稍候重试");
+		}
+		//信鸽推成功了，  才存该数据 
 		int count = messageService.save(message);
 		if (count<=0) {
 			return new Result<>(-1, "消息发送失败，请稍候重试");
-		
 		}
-		return new Result<>(0, "消息发送成功",message.getId());
+		return new Result<>(0, "消息发送成功",message);
 	}
 	
 	
@@ -114,7 +142,10 @@ public class ImController {
 	@RequestMapping(value ="/regToken", method = RequestMethod.GET, produces = {
     "application/json; charset=utf-8" })
 	@ResponseBody
-	private Result regToken(@Param("userId")long userId,@Param("token")String token) {
+	private Result regToken(@Param("userId")long userId,@Param("token")String token,@Param("deviceType")int deviceType) {
+		
+		
+		//device type 0为安卓 1为IOS  2为网页
 		if (userId<=0||token==null||token.trim().equals("")) {
 			return new Result<>(-1, "push token注册失败，参数非法");
 		}
@@ -123,6 +154,7 @@ public class ImController {
 		PushToken entity = new PushToken();
 		entity.setUserId(userId);
 		entity.setPushToken(token);
+		entity.setDeviceType(deviceType);
 		int count = pushTokenService.save(entity);
 		if (count<=0) {
 			return new Result<>(-1, "push token注册失败");

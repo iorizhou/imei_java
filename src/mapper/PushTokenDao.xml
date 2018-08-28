@@ -4,11 +4,24 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.imei.app.dao.PushTokenDao">
 	<insert id="save" parameterType="PushToken" useGeneratedKeys="true" keyProperty="id">
-  insert into push_token(user_id, push_token) values(#{userId}, #{pushToken});
+  insert into push_token(user_id, push_token,device_type) values(#{userId}, #{pushToken}, #{deviceType});
 </insert>
 
 <delete id="deleteByUserId" parameterType="java.lang.Long">
         delete from push_token 
         where user_id = #{user_id}
     </delete>
+    
+    
+    <select id="queryByUserId" resultType="PushToken">
+		SELECT
+		id,
+		user_id,
+		push_token,
+		device_type
+		FROM
+		push_token
+		WHERE
+		user_id = #{user_id}
+	</select>
 </mapper>
