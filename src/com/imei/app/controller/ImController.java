@@ -54,6 +54,9 @@ public class ImController {
 				dto.setStatus(message.getStatus());
 				dto.setSenderName(message.getSenderName());
 				dto.setRecverName(message.getRecverName());
+				dto.setSenderAvatar(message.getSenderAvatar());
+				dto.setRecverAvatar(message.getRecverAvatar());
+				dto.setReadTime(message.getReadTime());
 				list.add(dto);
 				map.put(message.getSenderId(), list);
 			}else {
@@ -62,6 +65,9 @@ public class ImController {
 				dto.setStatus(message.getStatus());
 				dto.setSenderName(message.getSenderName());
 				dto.setRecverName(message.getRecverName());
+				dto.setSenderAvatar(message.getSenderAvatar());
+				dto.setRecverAvatar(message.getRecverAvatar());
+				dto.setReadTime(message.getReadTime());
 				list.add(dto);
 				map.put(message.getSenderId(), list);
 			}
@@ -112,15 +118,23 @@ public class ImController {
 		if (recver==null) {
 			return new Result<>(-1, "recvId非法");
 		}
+		try {
+			Thread.sleep(10000);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		Message message = new Message();
 		message.setContent(content);
 		message.setSenderName(sender.getNickName());
-		message.setRecverName(sender.getNickName());
+		message.setRecverName(recver.getNickName());
+		message.setSenderAvatar(sender.getAvatar());
+		message.setRecverAvatar(recver.getAvatar());
 		message.setRecverId(recvId);
 		message.setSenderId(userId);
 		message.setSendTime(DateUtil.getNowStr());
 		message.setStatus(0);
 		message.setMessageType(messageType);
+		message.setReadTime("");
 		// 信鸽推成功了， 才存该数据
 		int count = messageService.save(message);
 		if (count <= 0) {

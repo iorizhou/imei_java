@@ -12,9 +12,32 @@ public class Message {
 	private String senderName;
 	private String recverName;  
 	private int messageType;   //消息类型 0为文本，1为图片，2为音频，3为视频
+	private String senderAvatar;
+	private String recverAvatar; 
+	private String readTime;
 	
 	
 	
+	
+	
+	public String getReadTime() {
+		return readTime;
+	}
+	public void setReadTime(String readTime) {
+		this.readTime = readTime;
+	}
+	public String getSenderAvatar() {
+		return senderAvatar;
+	}
+	public void setSenderAvatar(String senderAvatar) {
+		this.senderAvatar = senderAvatar;
+	}
+	public String getRecverAvatar() {
+		return recverAvatar;
+	}
+	public void setRecverAvatar(String recverAvatar) {
+		this.recverAvatar = recverAvatar;
+	}
 	public int getMessageType() {
 		return messageType;
 	}
