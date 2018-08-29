@@ -118,11 +118,7 @@ public class ImController {
 		if (recver==null) {
 			return new Result<>(-1, "recvId非法");
 		}
-		try {
-			Thread.sleep(10000);
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
+		
 		Message message = new Message();
 		message.setContent(content);
 		message.setSenderName(sender.getNickName());
