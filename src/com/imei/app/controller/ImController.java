@@ -127,12 +127,14 @@ public class ImController {
 			return new Result<>(-1, "消息发送失败，请稍候重试");
 		}
 		PushToken pushToken = pushTokenService.queryByUserId(recvId);
-		//推消息
-		JSONObject jsonObject = MessagePushUtil.getInstance().pushSingleMessage(message, pushToken);
-		if (jsonObject.getInt("ret_code")!=0) {
-			//失败了 则将数据库中也删除掉
-			messageService.delete(message.getId());
-			return new Result<>(-1, "消息发送失败，请稍候重试");
+		if (pushToken!=null) {
+			//推消息
+			JSONObject jsonObject = MessagePushUtil.getInstance().pushSingleMessage(message, pushToken);
+			if (jsonObject.getInt("ret_code")!=0) {
+				//失败了 则将数据库中也删除掉
+				messageService.delete(message.getId());
+				return new Result<>(-1, "消息发送失败，请稍候重试");
+			}
 		}
 		
 		return new Result<>(0, "消息发送成功",message);
